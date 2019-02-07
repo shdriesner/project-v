@@ -1,8 +1,8 @@
 PWD := $(shell pwd)
 GIT_COMMIT:=$(shell git rev-parse --verify HEAD --short=7)
-ROOTFS?=${PWD}/rootfs
+ROOTFS?="${PWD}/rootfs"
 ROOTFS_TGT?=$(shell uname -m)-project_v-linux-gnu
-MODULE_DIR?=./modules
+MODULE_DIR?="${PWD}/modules"
 CPU_JOBS=$(shell grep -c ^processor /proc/cpuinfo)
 ## @hostnamectl | grep "Chassis: vm" || echo "Not in a VM..." && exit 1
 
@@ -51,6 +51,9 @@ toolchain-pipeline:
 	@echo "Setting MAKEFLAGS"
 	export MAKEFLAGS="-j${CPU_JOBS}"
 	@echo "Going to make the toolchain... -- ${MAKEFLAGS}"
+	export ROOTFS=${ROOTFS}
+	export ROOTFS_TGT=${ROOTFS_TGT}
+	export MODULE_DIR=${MODULE_DIR}
 	ROOTFS=${ROOTFS} ROOTFS_TGT=${ROOTFS_TGT} MODULE_DIR=${MODULE_DIR} mkmod tools
 
 .PHONY: docker
