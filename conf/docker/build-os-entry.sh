@@ -77,7 +77,7 @@ ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/
 
 echo "######################"
 
-tree /work/project-v/rootfs -L 3
+tree /work/project-v/rootfs -L 3 -F
 
 ## ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
 

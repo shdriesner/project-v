@@ -24,10 +24,6 @@ jobs:
     displayName: 'Prepare root filesystem'
   - script: sudo make toolchain-pipeline
     displayName: 'Build filesystem toolchain'
-  - script: tree ./rootfs
+  - script: tree ./rootfs -F
     condition: always()
     displayName: 'Display contents of rootfs'
-  - task: PublishPipelineArtifact@0
-    inputs:
-      TargetPath: 'rootfs'
-      artifactName: rootfs.tar.gz
