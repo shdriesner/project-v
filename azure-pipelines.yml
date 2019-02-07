@@ -20,9 +20,9 @@ jobs:
     displayName: 'Check host dependencies'
   - script: sudo make install
     displayName: 'Install SDK libraries and commands'
-  - script: make prep-pipeline
+  - script: sudo make prep-pipeline
     displayName: 'Prepare root filesystem'
-  - script: make toolchain-pipeline
+  - script: sudo make toolchain-pipeline
     displayName: 'Build filesystem toolchain'
   - script: tree ./rootfs
     condition: always()
