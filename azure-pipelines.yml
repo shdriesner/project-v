@@ -18,7 +18,7 @@ jobs:
     displayName: Link sh to bash
   - script: make check
     displayName: 'Check host dependencies'
-  - script: make install
+  - script: sudo make install
     displayName: 'Install SDK libraries and commands'
   - script: make prep-pipeline
     displayName: 'Prepare root filesystem'
