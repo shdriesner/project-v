@@ -1,0 +1,4 @@
+pkgname=gmp
+type='pkg'
+version=6.1.2
+source[0]="http://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.xz"

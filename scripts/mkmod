@@ -1,0 +1,92 @@
+#!/bin/bash
+
+#
+# mkmod will find the BUILDMOD file under the specified directory
+# any subdirectories under that will contain collections of those packages.
+# This tool will then read each BUILDPKG and setup the sources.
+# Once complete the command will run build_mod() and move onto the next phase.
+#
+# Variables
+# ROOTFS describes the root filesystem i.e. chroot dir.
+# ROOTSRC describes the where 
+
+## Load libmagicfive.sh library. 
+## This will only run with the Makefile. Will need to fix this.
+. /usr/share/project-v/libmkmod.sh
+
+print_info "Sanity check executing" && sleep 2
+
+if [ -z "$ROOTFS" ] ; then
+      print_err "Variable ROOTFS is empty."
+      exit 1
+else
+      print_info "ROOTFS has been defined as $ROOTFS"
+fi
+
+if [ -z "$ROOTFS_TGT" ] ; then
+      print_err "Variable ROOTFS_TGT is empty."
+      exit 1
+else
+      print_info "ROOTFS_TGT has been defined as $ROOTFS_TGT"
+fi
+
+if [ -z "$MODULE_DIR" ] ; then
+      print_err "Variable MODULE_DIR is empty."
+      exit 1
+else
+      print_info "MODULE_DIR has been defined as $MODULE_DIR"
+fi
+
+if [ "$1" = "" ] ; then
+      print_err "Must pass a module name to build."
+      exit 1
+fi
+
+## Remove any trailing slash at the end.
+MODULE_DIR=${MODULE_DIR%/}
+ROOTFS=${ROOTFS%/}
+
+MODULE="$1"
+
+## Check if BUILDMOD exists.
+if [ ! -f "$MODULE_DIR/$1/BUILDMOD" ] ; then
+      print_err "No BUILDMOD file found in $MODULE_DIR/$1/"
+      exit 1
+fi
+
+print_ok "Sanity check complete" && sleep 2
+
+print_info "Creating base directories" && sleep 2
+
+print_info "Creating $ROOTFS"
+
+mkdir -p "$ROOTFS"
+
+print_info "Creating $ROOTFS/sources"
+
+mkdir -p "$ROOTFS/sources"
+
+print_ok "Done creating base directories"
+
+print_info "Setting permissions"
+
+chmod -v a+wt "$ROOTFS/sources"
+
+print_info "Setting up all sources for the $1 module" && sleep 2
+
+for d in $MODULE_DIR/$1/* ; do
+    if [ "$d" == "$MODULE_DIR/$1/BUILDMOD" ] ; then
+      continue
+    fi
+    setup_source "$ROOTFS/sources" "$d" curl
+done
+
+print_info "Building module for $1"
+
+source "$MODULE_DIR/$1/BUILDMOD"
+
+build_mod
+
+print_ok "Build complete for $1"
+
+exit 0

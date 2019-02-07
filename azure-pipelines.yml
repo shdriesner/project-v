@@ -1,0 +1,33 @@
+trigger:
+  branches: 
+   include: [master dev]
+  paths:
+   exclude: [README.md LICENSE .gitignore scripts/README.md modules/README.md conf/README.md conf/tools.list]
+
+
+jobs:
+- job: 'Build'
+  timeoutInMinutes: 125
+  cancelTimeoutInMinutes: 140
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+  - script: sudo apt install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma -y
+    displayName: 'Get build host dependencies'
+  - script: sudo rm -f /bin/sh && sudo ln -s /bin/bash /bin/sh
+    displayName: Link sh to bash
+  - script: make check
+    displayName: 'Check host dependencies'
+  - script: make install
+    displayName: 'Install SDK libraries and commands'
+  - script: make prep-pipeline
+    displayName: 'Prepare root filesystem'
+  - script: make toolchain-pipeline
+    displayName: 'Build filesystem toolchain'
+  - script: tree ./rootfs
+    condition: always()
+    displayName: 'Display contents of rootfs'
+  - task: PublishPipelineArtifact@0
+    inputs:
+      TargetPath: 'rootfs'
+      artifactName: rootfs.tar.gz

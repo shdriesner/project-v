@@ -1,0 +1,4 @@
+pkgname=mpfr
+type='pkg'
+version=4.0.1
+source[0]="http://www.mpfr.org/mpfr-4.0.1/mpfr-4.0.1.tar.xz"

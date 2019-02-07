@@ -1,0 +1,22 @@
+name='tools'
+type='module'
+
+build_mod() {
+    ## Create tools directory outside of sources staging directory.
+    mkdir -p "$ROOTFS/tools"
+    
+    echo "=====> Linking tools to host system... (This can be deleted later)"
+    ln -sv "$ROOTFS/tools" /
+
+    ## Build binutils 1st Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/binutils"
+    cd "$ROOTFS/sources/binutils"
+    build
+
+    echo "We are at $(pwd)"
+
+    ## Build gcc 1st Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/gcc"
+    cd "$ROOTFS/sources/gcc"
+    build
+}
