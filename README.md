@@ -41,7 +41,7 @@ For the host system you just need the bog standard Ubuntu, Fedora, CentOS, Arch,
 
 For DEB based systems:
 ```
-utoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma
+autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma
 ```
 
 For RPM based systems:
