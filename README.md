@@ -3,7 +3,7 @@
 </p>
 
 # Project V 
-[![Build Status](https://dev.azure.com/junlandfoss/Github/_apis/build/status/junland.project-v-lfs?branchName=master)](https://dev.azure.com/junlandfoss/Github/_build/latest?definitionId=2&branchName=master)
+[![Build Status](https://dev.azure.com/junlandfoss/Github/_apis/build/status/junland.project-v?branchName=master)](https://dev.azure.com/junlandfoss/Github/_build/latest?definitionId=5&branchName=master)
 
 `Project V` is a project in creating a distributed systems server operating system from [scratch](http://www.linuxfromscratch.org/). This project will be looking into deriving / building upon existinghow to squash commits in git how to squash commits in git  technologies and techniquies from other distributions such as CoreOS, Intel Clear Linux, openSUSE Kubic and Fedora / CentOS Atomic. Using these ideas, I hope to create a platform that can bridge the gap between traditional packaged and atomic update based distros while also looking towards the future of lightweight distributed-system oriented operating systems.
 
