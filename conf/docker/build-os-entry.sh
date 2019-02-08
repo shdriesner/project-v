@@ -47,7 +47,7 @@ prep_env () {
 
     cd project-v
 
-    if [ $1 == "dev"] ; then
+    if [ $1 == "dev" ] ; then
       print_info "Checking out dev branch"
       git checkout dev
     fi
