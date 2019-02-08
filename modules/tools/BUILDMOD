@@ -19,4 +19,11 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/gcc"
     cd "$ROOTFS/sources/gcc"
     build
+
+    echo "We are at $(pwd)"
+
+    ## Build linux api headers
+    load_buildpkg "$MODULE_DIR/$MODULE/linux-api-headers"
+    cd "$ROOTFS/sources/linux-api-headers"
+    build
 }

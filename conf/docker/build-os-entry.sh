@@ -47,7 +47,7 @@ prep_env () {
 
     cd project-v
 
-    if [ $1 == "dev"] ; then
+    if [ $1 == "dev" ] ; then
       print_info "Checking out dev branch"
       git checkout dev
     fi
@@ -75,10 +75,4 @@ print_info "Setting MAKEFLAGS for $MAKEFLAGS"
 
 ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod tools
 
-echo "######################"
-
-tree /work/project-v/rootfs -L 3 -F
-
 ## ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
-
-exit 0
