@@ -5,7 +5,7 @@
 # Project V 
 [![Build Status](https://dev.azure.com/junlandfoss/Github/_apis/build/status/junland.project-v?branchName=master)](https://dev.azure.com/junlandfoss/Github/_build/latest?definitionId=5&branchName=master)
 
-`Project V` is a project in creating a distributed systems server operating system from [scratch](http://www.linuxfromscratch.org/). This project will be looking into deriving / building upon existinghow to squash commits in git how to squash commits in git  technologies and techniquies from other distributions such as CoreOS, Intel Clear Linux, openSUSE Kubic and Fedora / CentOS Atomic. Using these ideas, I hope to create a platform that can bridge the gap between traditional packaged and atomic update based distros while also looking towards the future of lightweight distributed-system oriented operating systems.
+`Project V` is a project in creating a distributed systems server operating system from [scratch](http://www.linuxfromscratch.org/). This project will be looking into deriving / building upon existing technologies and techniques from other distributions such as CoreOS, Intel Clear Linux, openSUSE Kubic and Fedora / CentOS Atomic. Using these ideas, I hope to create a platform that can bridge the gap between traditional packaged and atomic update based distros while also looking towards the future of lightweight distributed-system oriented operating systems.
 
 _This repo will be the main staging ground for the whole project, down the road I would like to seperate this out into seperate repos under a organization. (Lot eaiser to maintain with one repo at the moment.)_
 
