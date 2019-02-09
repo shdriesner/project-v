@@ -139,7 +139,7 @@ extract_dl_file() {
     FILE=$1
     FILE_TYPE=$(file -bizL -- "$FILE")
     
-    print_info "Attempting to unarchive downloaded files"
+    print_info "Attempting to unarchive downloaded file"
     
     case "$FILE_TYPE" in
         *application/x-tar*|*application/zip*|*application/x-zip*|*application/x-cpio*)
