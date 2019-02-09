@@ -135,4 +135,29 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/make"
     cd "$ROOTFS/sources/make"
     build
+
+    ## Build patch
+    load_buildpkg "$MODULE_DIR/$MODULE/patch"
+    cd "$ROOTFS/sources/patch"
+    build
+
+    ## Build perl
+    load_buildpkg "$MODULE_DIR/$MODULE/perl"
+    cd "$ROOTFS/sources/perl"
+    build
+
+    ## Build sed
+    load_buildpkg "$MODULE_DIR/$MODULE/sed"
+    cd "$ROOTFS/sources/sed"
+    build
+
+    ## Build tar
+    load_buildpkg "$MODULE_DIR/$MODULE/tar"
+    cd "$ROOTFS/sources/tar"
+    build
+
+    ## Build tar
+    load_buildpkg "$MODULE_DIR/$MODULE/texinfo"
+    cd "$ROOTFS/sources/texinfo"
+    build
 }
