@@ -1,0 +1,14 @@
+pkgname=coreutils
+type='pkg'
+version=8.30
+source[0]="http://ftp.gnu.org/gnu/coreutils/coreutils-8.30.tar.xz"
+
+build() {
+    ./configure --prefix=/tools --enable-install-program=hostname
+
+    make
+
+    make RUN_EXPENSIVE_TESTS=yes check
+
+    make install
+}
