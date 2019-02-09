@@ -75,4 +75,11 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/ncurses"
     cd "$ROOTFS/sources/ncurses"
     build
+
+    ## Build bash
+    load_buildpkg "$MODULE_DIR/$MODULE/bash"
+    cd "$ROOTFS/sources/bash"
+    build
+
+    
 }
