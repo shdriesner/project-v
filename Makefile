@@ -72,7 +72,9 @@ install:
 	cp lib/libcommon.sh /usr/share/project-v/libcommon.sh
 	@echo "Installing shell commands..."
 	chmod +x scripts/mkmod
+	chmod +x scripts/addtmpl
 	cp scripts/mkmod /usr/local/bin/mkmod
+	cp scripts/addtmpl /usr/local/bin/addtmpl
 
 .PHONY: check
 check:

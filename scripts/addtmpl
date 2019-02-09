@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ -z "$MODULE_DIR" ] ; then
+      print_err "Variable MODULE_DIR is empty."
+      exit 1
+else
+      echo "=====> MODULE_DIR has been defined as $MODULE_DIR"
+fi
+
+if [ -d "$MODULE_DIR/$1" ]; then
+  echo "=====> $1 modules does not exist"
+  exit 1
+fi
+
+if [ -d "$MODULE_DIR/$1/$2" ]; then
+  echo "=====> $1 pkgs does exist"
+  exit 1
+fi
+
+MOD=$1
+PKG=$2
+
+mkdir "$MODULE_DIR/$MOD/$PKG"
+
+echo "pkgname=$PKG" > "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "type='pkg'" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "version=" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "source[0]=" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+
+exit 0
