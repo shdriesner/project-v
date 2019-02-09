@@ -1,4 +1,4 @@
-pkgname=gcc
+pkgname=libstdc++
 type='pkg'
 version=8.2.0
 source[0]="http://ftp.gnu.org/gnu/gcc/gcc-8.2.0/gcc-8.2.0.tar.xz"
