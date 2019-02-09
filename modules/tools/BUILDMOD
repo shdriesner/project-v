@@ -26,4 +26,9 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/linux-api-headers"
     cd "$ROOTFS/sources/linux-api-headers"
     build
+
+    ## Build glibc
+    load_buildpkg "$MODULE_DIR/$MODULE/glibc"
+    cd "$ROOTFS/sources/glibc"
+    build
 }
