@@ -16,7 +16,7 @@ build() {
       libc_cv_forced_unwind=yes          \
       libc_cv_c_cleanup=yes
 
-      make -j1
+      make
 
       touch /tools/etc/ld.so.conf
 
@@ -29,4 +29,6 @@ test() {
   echo 'int main(){}' > dummy.c
   $ROOTFS_TGT-gcc dummy.c
   readelf -l a.out | grep ': /tools'
+
+  rm -v dummy.c a.out
 }
