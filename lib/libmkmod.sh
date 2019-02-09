@@ -144,19 +144,19 @@ extract_dl_file() {
     case "$FILE_TYPE" in
         *application/x-tar*|*application/zip*|*application/x-zip*|*application/x-cpio*)
             tar -xaf "$FILE" --strip-components 1 --directory $2 2>/dev/null
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-gzip*)
             bzip2 -dk "$FILE" > $2
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-bzip*)
             bzip2 -dk "$FILE" > $2
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-xz*)
             unxz  "$FILE"
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *)
             print_err "Looks like $FILE is not a archive -- $FILE_TYPE"
