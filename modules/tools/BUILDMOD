@@ -95,4 +95,9 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/coreutils"
     cd "$ROOTFS/sources/coreutils"
     build
+
+    ## Build diffutils
+    load_buildpkg "$MODULE_DIR/$MODULE/diffutils"
+    cd "$ROOTFS/sources/diffutils"
+    build
 }
