@@ -102,7 +102,8 @@ download_agent() {
     case "$4" in
         curl)
             print_info "Getting $1 -- $DEST_DIR/$3"
-            curl -C - --fail --ftp-pasv --retry 3 --retry-delay 3 -L "$1" --output "$DEST_DIR/$3"
+            sleep 3
+            curl -C - --fail --ftp-pasv --retry 4 --retry-delay 5 -L "$1" --output "$DEST_DIR/$3"
             print_ok "Placed file into $DEST_DIR/$3"
         ;;
         wget)
