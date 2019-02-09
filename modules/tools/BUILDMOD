@@ -120,4 +120,19 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/gettext"
     cd "$ROOTFS/sources/gettext"
     build
+
+    ## Build grep
+    load_buildpkg "$MODULE_DIR/$MODULE/grep"
+    cd "$ROOTFS/sources/grep"
+    build
+
+    ## Build gzip
+    load_buildpkg "$MODULE_DIR/$MODULE/gzip"
+    cd "$ROOTFS/sources/gzip"
+    build
+
+    ## Build make
+    load_buildpkg "$MODULE_DIR/$MODULE/make"
+    cd "$ROOTFS/sources/make"
+    build
 }

@@ -1,0 +1,18 @@
+pkgname=gzip
+type='pkg'
+version=1.9
+source[0]="http://ftp.gnu.org/gnu/gzip/gzip-1.9.tar.xz"
+
+build() {
+    sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+    echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}
+
