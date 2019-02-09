@@ -72,7 +72,6 @@ install:
 	chmod +x scripts/mkmod
 	cp scripts/mkmod /usr/local/bin/mkmod
 
-
 .PHONY: check
 check:
 	@echo "Checking host build system..."
