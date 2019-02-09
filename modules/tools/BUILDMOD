@@ -32,4 +32,9 @@ build_mod() {
     cd "$ROOTFS/sources/glibc"
     build
     test
+
+    ## Build libstdc++
+    load_buildpkg "$MODULE_DIR/$MODULE/libstdc++"
+    cd "$ROOTFS/sources/libstdc++"
+    build
 }
