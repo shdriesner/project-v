@@ -44,8 +44,9 @@ build_mod() {
     rm -rf ./build
     build_pass_2
 
-    ## Build gcc 1st Pass
+    ## Build gcc 2nd Pass
     load_buildpkg "$MODULE_DIR/$MODULE/gcc"
     cd "$ROOTFS/sources/gcc"
+    rm -rf ./build
     build_pass_2
 }
