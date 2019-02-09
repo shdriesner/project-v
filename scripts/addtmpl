@@ -7,8 +7,8 @@ else
       echo "=====> MODULE_DIR has been defined as $MODULE_DIR"
 fi
 
-if [ -d "$MODULE_DIR/$1" ]; then
-  echo "=====> $1 modules does not exist"
+if [ ! -d "$MODULE_DIR/$1" ]; then
+  echo "=====> $1 module does not exist"
   exit 1
 fi
 
@@ -20,7 +20,7 @@ fi
 MOD=$1
 PKG=$2
 
-mkdir "$MODULE_DIR/$MOD/$PKG"
+mkdir -v "$MODULE_DIR/$MOD/$PKG"
 
 echo "pkgname=$PKG" > "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
 echo "type='pkg'" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"

@@ -115,4 +115,9 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/gawk"
     cd "$ROOTFS/sources/gawk"
     build
+
+    ## Build gettext
+    load_buildpkg "$MODULE_DIR/$MODULE/gettext"
+    cd "$ROOTFS/sources/gettext"
+    build
 }
