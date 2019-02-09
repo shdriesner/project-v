@@ -65,7 +65,27 @@ vagrant up
 vagrant ssh
 ```
 
-From the vagrant VM you should be able to cd into `project-v` and run build stuff the rootfs from there.
+```
+cd project-v
+```
+
+Prep the enviroment.
+```
+make prep-local
+```
+
+Install libraries, scripts, and commands.
+```
+make install
+```
+
+Build the toolchain first.
+```
+ROOTFS=/home/vagrant/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/home/vagrant/project-v/modules mkmod tools
+```
+
+_Note that file paths for `ROOTFS` and `MODULE_DIR` need to be the full paths._
+
 
 ### Docker
 
@@ -81,6 +101,14 @@ make docker
 ```
 docker run build-os
 ```
+(Master Branch)
+
+or
+
+```
+docker run build-os dev
+```
+(Dev Branch)
 
 From invokeing `docker run` the image should clone the repo and start building the tools and base operating system. After it's built you will have to find the container ID and use `docker cp` to copy the `/work` directory to pull the project and rootfs onto your host machine.
 
