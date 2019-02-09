@@ -79,6 +79,11 @@ Install libraries, scripts, and commands.
 make install
 ```
 
+Source new enviroment file.
+```
+. ./builder.env
+```
+
 Build the toolchain first.
 ```
 ROOTFS=/home/vagrant/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/home/vagrant/project-v/modules mkmod tools
