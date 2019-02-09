@@ -25,6 +25,7 @@ build() {
 }
 
 test() {
+  echo "Testing glibc..."
   echo 'int main(){}' > dummy.c
   $ROOTFS_TGT-gcc dummy.c
   readelf -l a.out | grep ': /tools'
