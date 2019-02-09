@@ -50,4 +50,14 @@ build_mod() {
     rm -rf ./build
     build_pass_2
     test
+
+    ## Build tcl
+    load_buildpkg "$MODULE_DIR/$MODULE/tcl"
+    cd "$ROOTFS/sources/tcl"
+    build
+
+    ## Build tcl
+    load_buildpkg "$MODULE_DIR/$MODULE/expect"
+    cd "$ROOTFS/sources/expect"
+    build
 }

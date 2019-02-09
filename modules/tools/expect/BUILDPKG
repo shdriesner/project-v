@@ -1,0 +1,18 @@
+pkgname=expect
+type='pkg'
+version=5.45.4
+source[0]="https://prdownloads.sourceforge.net/expect/expect5.45.4.tar.gz"
+
+build() {
+    cp -v configure{,.orig}
+
+    sed 's:/usr/local/bin:/bin:' configure.orig > configure
+
+    ./configure --prefix=/tools       \
+                --with-tcl=/tools/lib \
+                --with-tclinclude=/tools/include
+    
+    make
+
+    make SCRIPTS="" install
+}
