@@ -112,3 +112,12 @@ build_pass_2() {
 
     ln -sv gcc /tools/bin/cc
 }
+
+test() {
+  echo "Testing glibc..."
+  echo 'int main(){}' > dummy.c
+  $ROOTFS_TGT-gcc dummy.c
+  readelf -l a.out | grep ': /tools'
+
+  rm -v dummy.c a.out
+}

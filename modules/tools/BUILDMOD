@@ -49,4 +49,5 @@ build_mod() {
     cd "$ROOTFS/sources/gcc"
     rm -rf ./build
     build_pass_2
+    test
 }
