@@ -105,4 +105,14 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/file"
     cd "$ROOTFS/sources/file"
     build
+
+    ## Build findutils
+    load_buildpkg "$MODULE_DIR/$MODULE/findutils"
+    cd "$ROOTFS/sources/findutils"
+    build
+
+    ## Build gawk
+    load_buildpkg "$MODULE_DIR/$MODULE/gawk"
+    cd "$ROOTFS/sources/gawk"
+    build
 }
