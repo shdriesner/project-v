@@ -37,4 +37,10 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/libstdc++"
     cd "$ROOTFS/sources/libstdc++"
     build
+
+    ## Build binutils 2nd Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/binutils"
+    cd "$ROOTFS/sources/binutils"
+    rm -rf ./build
+    build_pass_2
 }
