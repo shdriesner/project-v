@@ -81,5 +81,18 @@ build_mod() {
     cd "$ROOTFS/sources/bash"
     build
 
-    
+    ## Build bison
+    load_buildpkg "$MODULE_DIR/$MODULE/bison"
+    cd "$ROOTFS/sources/bison"
+    build
+
+    ## Build bzip2
+    load_buildpkg "$MODULE_DIR/$MODULE/bzip2"
+    cd "$ROOTFS/sources/bzip2"
+    build
+
+    ## Build coreutils
+    load_buildpkg "$MODULE_DIR/$MODULE/coreutils"
+    cd "$ROOTFS/sources/coreutils"
+    build
 }
