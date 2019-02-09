@@ -18,6 +18,14 @@ build() {
 
       make -j1
 
+      touch /tools/etc/ld.so.conf
+
       make install
 
+}
+
+test() {
+  echo 'int main(){}' > dummy.c
+  $ROOTFS_TGT-gcc dummy.c
+  readelf -l a.out | grep ': /tools'
 }

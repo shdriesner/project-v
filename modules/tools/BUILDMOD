@@ -31,4 +31,5 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/glibc"
     cd "$ROOTFS/sources/glibc"
     build
+    test
 }
