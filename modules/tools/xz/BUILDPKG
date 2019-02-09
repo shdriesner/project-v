@@ -1,0 +1,15 @@
+pkgname=xz
+type='pkg'
+version=1.2.11
+source[0]="https://zlib.net/zlib-1.2.11.tar.xz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}
+

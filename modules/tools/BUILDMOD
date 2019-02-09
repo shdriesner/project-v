@@ -156,8 +156,30 @@ build_mod() {
     cd "$ROOTFS/sources/tar"
     build
 
-    ## Build tar
+    ## Build texinfo
     load_buildpkg "$MODULE_DIR/$MODULE/texinfo"
     cd "$ROOTFS/sources/texinfo"
     build
+
+    ## Build util-linux
+    load_buildpkg "$MODULE_DIR/$MODULE/util-linux"
+    cd "$ROOTFS/sources/util-linux"
+    build
+
+    ## Build xz
+    load_buildpkg "$MODULE_DIR/$MODULE/xz"
+    cd "$ROOTFS/sources/xz"
+    build
+
+    ## Strip
+    strip --strip-debug /tools/lib/*
+    /usr/bin/strip --strip-unneeded /tools/{,s}bin/*
+
+    ## Remove Docs
+    rm -rf /tools/{,share}/{info,man,doc}
+
+    ## Remove unneeded files
+    find /tools/{lib,libexec} -name \*.la -delete
+
+    chown -R root:root $ROOTFS/tools
 }
