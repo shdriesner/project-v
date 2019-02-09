@@ -28,6 +28,7 @@ prep-local:
 	@echo "Creating enviroment file..."
 	echo "set +h" > builder.env
 	echo "umask 022" >> builder.env
+	echo "MODULE_DIR=${MODULE_DIR}" >> builder.env
 	echo "ROOTFS=${ROOTFS}" >> builder.env
 	echo "LC_ALL=POSIX" >> builder.env
 	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
@@ -40,6 +41,7 @@ prep-pipeline:
 	@echo "Creating enviroment file..."
 	echo "set +h" > builder.env
 	echo "umask 022" >> builder.env
+	echo "MODULE_DIR=${MODULE_DIR}" >> builder.env
 	echo "ROOTFS=${ROOTFS}" >> builder.env
 	echo "LC_ALL=POSIX" >> builder.env
 	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
