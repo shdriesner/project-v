@@ -43,4 +43,9 @@ build_mod() {
     cd "$ROOTFS/sources/binutils"
     rm -rf ./build
     build_pass_2
+
+    ## Build gcc 1st Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/gcc"
+    cd "$ROOTFS/sources/gcc"
+    build_pass_2
 }
