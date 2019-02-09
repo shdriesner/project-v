@@ -56,8 +56,23 @@ build_mod() {
     cd "$ROOTFS/sources/tcl"
     build
 
-    ## Build tcl
+    ## Build expect
     load_buildpkg "$MODULE_DIR/$MODULE/expect"
     cd "$ROOTFS/sources/expect"
+    build
+
+    ## Build dejagnu
+    load_buildpkg "$MODULE_DIR/$MODULE/dejagnu"
+    cd "$ROOTFS/sources/dejagnu"
+    build
+
+    ## Build m4
+    load_buildpkg "$MODULE_DIR/$MODULE/m4"
+    cd "$ROOTFS/sources/m4"
+    build
+
+    ## Build ncurses
+    load_buildpkg "$MODULE_DIR/$MODULE/ncurses"
+    cd "$ROOTFS/sources/ncurses"
     build
 }
