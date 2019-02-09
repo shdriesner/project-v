@@ -1,0 +1,15 @@
+pkgname=patch
+type='pkg'
+version=2.7.6
+source[0]="http://ftp.gnu.org/gnu/patch/patch-2.7.6.tar.xz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}
+
