@@ -37,6 +37,9 @@ print_ok() {
 }
 
 prep_env () {
+    print_info
+    git clone https://github.com/junland/project-v.git
+
     cd project-v
 
     if [ $1 == "dev" ] ; then
