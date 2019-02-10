@@ -2,11 +2,13 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma -y && apt-get autoremove -y
 
-COPY conf/docker/build-rootfs-entry.sh /usr/local/bin/entry.sh
+COPY conf/docker/build-base-os-entry.sh /usr/local/bin/entry.sh
 
 RUN chmod 777 /usr/local/bin/entry.sh
 
 RUN cd /bin/ && sudo rm sh && sudo ln -s bash sh
+
+RUN cd /work && git clone https://github.com/junland/project-v.git
 
 VOLUME /work
 

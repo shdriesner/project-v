@@ -37,14 +37,6 @@ print_ok() {
 }
 
 prep_env () {
-    print_info "Getting master github repo..."
-
-    git clone https://github.com/junland/project-v.git
-
-    print_ok "Complete"
-
-    sleep 5
-
     cd project-v
 
     if [ $1 == "dev" ] ; then
@@ -59,6 +51,14 @@ prep_env () {
     make check
 
     make prep-pipeline
+
+    print_info "Linking tools to host system... (This can be deleted later)"
+    mkdir -p "/work/project-v/rootfs/tools"
+    ln -sv "/work/project-v/rootfs/tools" /
+
+    wget https://github.com/junland/project-v/releases/download/0.0.1-alpha/x86_64-project_v-linux-gnu.tar.gz
+
+    tar -xf ./x86_64-project_v-linux-gnu.tar.gz -C ./rootfs/tools
 
     print_ok "Done."
 }

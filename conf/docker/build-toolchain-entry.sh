@@ -37,14 +37,6 @@ print_ok() {
 }
 
 prep_env () {
-    print_info "Getting master github repo..."
-
-    git clone https://github.com/junland/project-v.git
-
-    print_ok "Complete"
-
-    sleep 5
-
     cd project-v
 
     if [ $1 == "dev" ] ; then
@@ -79,5 +71,3 @@ print_info "Setting MAKEFLAGS for $MAKEFLAGS"
 # Start the build process.
 
 ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod tools
-
-## ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os

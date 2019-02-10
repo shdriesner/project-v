@@ -62,7 +62,7 @@ toolchain-pipeline:
 docker:
 	@echo "Creating docker images..."
 	docker build -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:latest .
-	docker build -f ./conf/docker/Dockerfile.build-rootfs -t build-rootfs:latest .
+	docker build -f ./conf/docker/Dockerfile.build-rootfs -t build-base-os:latest .
 
 .PHONY: install
 install:
