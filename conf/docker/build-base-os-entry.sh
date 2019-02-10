@@ -37,6 +37,7 @@ print_ok() {
 }
 
 prep_env () {
+    print_info "Cloneing Project V Repository"
     git clone https://github.com/junland/project-v.git
 
     cd project-v
