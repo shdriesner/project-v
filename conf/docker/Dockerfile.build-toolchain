@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma -y && apt-get autoremove -y
 
-COPY conf/docker/build-os-entry.sh /usr/local/bin/entry.sh
+COPY conf/docker/build-toolchain-entry.sh /usr/local/bin/entry.sh
 
 RUN chmod 777 /usr/local/bin/entry.sh
 
