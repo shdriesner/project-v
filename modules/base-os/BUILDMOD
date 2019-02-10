@@ -15,7 +15,6 @@ build_mod() {
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
 
-    ## Build binutils
-    load_buildpkg "$MODULE_DIR/$MODULE/linux-api-headers"
-    build
+    ## Build test
+    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "$ROOTFS/sources/linux-api-headers"
 }

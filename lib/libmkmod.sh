@@ -252,7 +252,14 @@ chroot_build() {
       print_ok "Looks like we are able to find build()"
     fi
 
+    export -f build
+
     print_info "Building package from $1"
 
-    build
+    chroot "$LFS" /tools/bin/env -i \
+                  HOME=/root        \
+                  TERM="$TERM"      \
+                  PS1='(PV chroot) \u:\w\$ ' \
+                  PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
+                  /tools/bin/bash -c "cd $CD_DIR && build"
 }
