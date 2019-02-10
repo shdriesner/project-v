@@ -104,16 +104,30 @@ make docker
 (Wait a bit.)
 
 ```
-docker run build-os
+docker run build-toolchain
 ```
 (Master Branch)
 
 or
 
 ```
-docker run build-os dev
+docker run build-toolchain dev
 ```
 (Dev Branch)
+
+```
+docker run build-base-os
+```
+(Master Branch)
+
+or
+
+```
+docker run build-base-os dev
+```
+(Dev Branch)
+
+_`build-base-os` will take a prebuilt toolchain from Github to build the base-os module._
 
 From invokeing `docker run` the image should clone the repo and start building the tools and base operating system. After it's built you will have to find the container ID and use `docker cp` to copy the `/work` directory to pull the project and rootfs onto your host machine.
 
