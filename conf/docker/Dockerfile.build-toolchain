@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma -y && apt-get autoremove -y
+RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma wget -y && apt-get autoremove -y
 
 COPY conf/docker/build-toolchain-entry.sh /usr/local/bin/entry.sh
 
