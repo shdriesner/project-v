@@ -245,12 +245,15 @@ load_buildpkg() {
 }
 
 chroot_build() {
+    local CD_DIR
     # just to be safe we will load BUILDPKG inside this function.
     load_buildpkg $1
 
     if type 'build' | grep -q 'function' > /dev/null ; then
       print_ok "Looks like we are able to find build()"
     fi
+
+    CD_DIR=$1
 
     export -f build
 

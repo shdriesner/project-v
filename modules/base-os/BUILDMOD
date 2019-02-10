@@ -16,5 +16,5 @@ build_mod() {
     fi
 
     ## Build test
-    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "$ROOTFS/sources/linux-api-headers"
+    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "/sources/linux-api-headers"
 }
