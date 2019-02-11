@@ -17,6 +17,8 @@
 # libmkmod library helps facilitate create of modules (Collection of packages). Mainly used with mkmod command.
 #
 
+set -e
+
 ## Common colors
 RESTORE=$(echo -en '\033[0m') # This will terminate the color variables.
 RED=$(echo -en '\033[00;31m')
