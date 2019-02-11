@@ -16,4 +16,11 @@ jobs:
     displayName: 'Build docker images'
   - script: docker run build-toolchain dev
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    displayName: 'Build dev toolchain'
+  - script: docker run build-toolchain
     displayName: 'Build toolchain'
+  - script: docker run build-base-os dev
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    displayName: 'Build dev base-os'
+  - script: docker run build-base-os
+    displayName: 'Build base-os'
