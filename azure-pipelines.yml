@@ -1,6 +1,6 @@
 trigger:
   branches: 
-   include: [master dev]
+   include: [master, dev]
   paths:
    exclude: [README.md LICENSE .gitignore scripts/README.md modules/README.md conf/README.md conf/tools.list]
 
@@ -22,7 +22,7 @@ jobs:
     displayName: 'Install SDK libraries and commands'
   - script: sudo make prep-pipeline
     displayName: 'Prepare root filesystem'
-  - script: sudo make toolchain-pipeline
+  - script: . builder.env && sudo -E make toolchain-pipeline
     displayName: 'Build filesystem toolchain'
   - script: tree ./rootfs -F
     condition: always()
