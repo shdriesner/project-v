@@ -12,18 +12,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: sudo apt install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma -y
-    displayName: 'Get build host dependencies'
-  - script: sudo rm -f /bin/sh && sudo ln -s /bin/bash /bin/sh
-    displayName: Link sh to bash
-  - script: make check
-    displayName: 'Check host dependencies'
-  - script: sudo make install
-    displayName: 'Install SDK libraries and commands'
-  - script: sudo make prep-pipeline
-    displayName: 'Prepare root filesystem'
-  - script: sudo source ./builder.env && make toolchain-pipeline
-    displayName: 'Build filesystem toolchain'
-  - script: tree ./rootfs -F
-    condition: always()
-    displayName: 'Display contents of rootfs'
+  - script: docker build -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:latest .
+    displayName: 'Build docker images'
+  - script: docker run build-toolchain dev
+    displayName: 'Build toolchain'
