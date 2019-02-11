@@ -24,6 +24,6 @@ jobs:
     displayName: 'Prepare root filesystem'
   - script: sudo make toolchain-pipeline
     displayName: 'Build filesystem toolchain'
-  - script: tree ./rootfs -F
+  - script: tree ./rootfs/tools -F
     condition: always()
-    displayName: 'Display contents of rootfs'
+    displayName: 'Display contents of toolchain'
