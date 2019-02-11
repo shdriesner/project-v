@@ -9,7 +9,7 @@ build() {
 
     ./configure --prefix=/tools
 
-    make check
+    
 
     make install
 }
