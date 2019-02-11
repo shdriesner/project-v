@@ -15,4 +15,5 @@ jobs:
   - script: make docker
     displayName: 'Build docker images'
   - script: docker run build-toolchain dev
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
     displayName: 'Build toolchain'
