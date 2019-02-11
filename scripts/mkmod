@@ -52,6 +52,8 @@ else
       print_info "MODULE_DIR has been defined as $MODULE_DIR"
 fi
 
+print_info "PATH has been defined as $PATH"
+
 if [ "$1" = "" ] ; then
       print_err "Must pass a module name to build."
       exit 1
