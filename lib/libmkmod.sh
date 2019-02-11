@@ -17,6 +17,8 @@
 # libmkmod library helps facilitate create of modules (Collection of packages). Mainly used with mkmod command.
 #
 
+set -e
+
 ## Common colors
 RESTORE=$(echo -en '\033[0m') # This will terminate the color variables.
 RED=$(echo -en '\033[00;31m')
@@ -101,8 +103,8 @@ download_agent() {
     
     case "$4" in
         curl)
-            print_info "Getting $1 -- $DEST_DIR/$3"
-            curl -C - --fail --ftp-pasv --retry 3 --retry-delay 3 -L "$1" --output "$DEST_DIR/$3"
+            print_info "Getting $1 -- $DEST_DIR/$3" && sleep 1
+            curl -C - --fail --ftp-pasv --retry 4 --retry-delay 5 -L "$1" --output "$DEST_DIR/$3"
             print_ok "Placed file into $DEST_DIR/$3"
         ;;
         wget)
@@ -138,24 +140,24 @@ extract_dl_file() {
     FILE=$1
     FILE_TYPE=$(file -bizL -- "$FILE")
     
-    print_info "Attempting to unarchive downloaded files"
+    print_info "Attempting to unarchive downloaded file"
     
     case "$FILE_TYPE" in
         *application/x-tar*|*application/zip*|*application/x-zip*|*application/x-cpio*)
             tar -xaf "$FILE" --strip-components 1 --directory $2 2>/dev/null
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-gzip*)
             bzip2 -dk "$FILE" > $2
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-bzip*)
             bzip2 -dk "$FILE" > $2
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *application/x-xz*)
             unxz  "$FILE"
-            print_ok "Done unarchiving $FILE"
+            print_ok "Done unarchiving $FILE into $2"
         ;;
         *)
             print_err "Looks like $FILE is not a archive -- $FILE_TYPE"
@@ -245,6 +247,7 @@ load_buildpkg() {
 }
 
 chroot_build() {
+    local CD_DIR
     # just to be safe we will load BUILDPKG inside this function.
     load_buildpkg $1
 
@@ -252,7 +255,16 @@ chroot_build() {
       print_ok "Looks like we are able to find build()"
     fi
 
+    CD_DIR=$1
+
+    export -f build
+
     print_info "Building package from $1"
 
-    build
+    chroot "$LFS" /tools/bin/env -i \
+                  HOME=/root        \
+                  TERM="$TERM"      \
+                  PS1='(PV chroot) \u:\w\$ ' \
+                  PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
+                  /tools/bin/bash -c "cd $CD_DIR && build"
 }

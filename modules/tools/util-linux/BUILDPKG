@@ -1,0 +1,18 @@
+pkgname=util-linux
+type='pkg'
+version=2.32.1
+source[0]="https://www.kernel.org/pub/linux/utils/util-linux/v2.32/util-linux-2.32.1.tar.xz"
+
+build() {
+    ./configure --prefix=/tools                \
+                --without-python               \
+                --disable-makeinstall-chown    \
+                --without-systemdsystemunitdir \
+                --without-ncurses              \
+                 PKG_CONFIG=""
+
+    make
+
+    make install
+}
+

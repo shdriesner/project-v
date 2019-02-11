@@ -52,35 +52,70 @@ For RPM based systems:
 It's highly recommended that you use a Vagrant VM (I have included a Vagrant file with all dependencies installed.) or a Docker image. (This has also been included in this project)
 
 ### Vagrant
+1. Go into project folder.
 ```
 cd project-v/
 ```
+2. Provision Vagrant VM.
 ```
 vagrant up
 ```
-
-(Wait a bit.)
-
+3. Login into Vagrant VM.
 ```
 vagrant ssh
 ```
+4. Change into project dir.
+```
+cd project-v
+```
+5. Prep the enviroment.
+```
+make prep-local
+```
+6. Install libraries, scripts, and commands.
+```
+make install
+```
+7. Source new enviroment file.
+```
+. ./builder.env
+```
 
-From the vagrant VM you should be able to cd into `project-v` and run build stuff the rootfs from there.
+8. Build the toolchain first.
+```
+ROOTFS=/home/vagrant/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/home/vagrant/project-v/modules mkmod tools
+```
+
+_Note that file paths for `ROOTFS` and `MODULE_DIR` need to be the full paths._
+
 
 ### Docker
-
+1. Go into project folder.
 ```
 cd project-v/
 ```
+2. Make the docker images.
 ```
 make docker
 ```
-
-(Wait a bit.)
-
+3. Build the toolchain.
 ```
-docker run build-os
+docker run build-toolchain ## Master Branch
 ```
+or
+```
+docker run build-toolchain dev ## Dev Branch
+```
+4. Build the base-os. 
+```
+docker run build-base-os ## Master Branch
+```
+or
+```
+docker run build-base-os dev ## Dev Branch
+```
+
+_`build-base-os` will take a prebuilt toolchain from Github to build the base-os module._
 
 From invokeing `docker run` the image should clone the repo and start building the tools and base operating system. After it's built you will have to find the container ID and use `docker cp` to copy the `/work` directory to pull the project and rootfs onto your host machine.
 

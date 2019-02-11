@@ -1,0 +1,12 @@
+pkgname=dejagnu
+type='pkg'
+version=1.6.1
+source[0]="http://ftp.gnu.org/gnu/dejagnu/dejagnu-1.6.1.tar.gz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make install
+
+    make check
+}

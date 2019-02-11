@@ -1,0 +1,15 @@
+pkgname=m4
+type='pkg'
+version=1.4.18
+source[0]="https://ftp.gnu.org/gnu/m4/m4-1.4.18.tar.xz"
+
+build() {
+    sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+    echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+
+    ./configure --prefix=/tools
+
+    make check
+
+    make install
+}

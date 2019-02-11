@@ -5,4 +5,6 @@ source[0]="https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.20.6.tar.xz"
 
 build() {
     echo "This will be filled in by the chroot"
+    pwd
+    pwd > HI_FROM_CHROOT
 }

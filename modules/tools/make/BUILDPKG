@@ -1,0 +1,17 @@
+pkgname=make
+type='pkg'
+version=4.2.1
+source[0]="http://ftp.gnu.org/gnu/make/make-4.2.1.tar.bz2"
+
+build() {
+    sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+    ./configure --prefix=/tools --without-guile
+
+    make
+
+    make check
+
+    make install
+}
+

@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
       echo "=====> Installing dependencies..."
       sudo apt update
       sudo apt-get dist-upgrade -y
-      sudo apt-get install -y autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma
+      sudo apt-get install -y autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma wget coreutils -y && apt-get autoremove
 
       # Cloneing repo
       echo "=====> Cloneing repo..."

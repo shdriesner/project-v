@@ -37,13 +37,8 @@ print_ok() {
 }
 
 prep_env () {
-    print_info "Getting master github repo..."
-
+    print_info "Cloning Project V Repository"
     git clone https://github.com/junland/project-v.git
-
-    print_ok "Complete"
-
-    sleep 5
 
     cd project-v
 
@@ -51,7 +46,7 @@ prep_env () {
       print_info "Checking out dev branch"
       git checkout dev
     fi
-
+    
     make install
 
     make clean
@@ -65,14 +60,17 @@ prep_env () {
 
 prep_env $1
 
-## make toolchain-pipeline
-
+# Set any variables here.
 CPU_JOBS=$(grep -c ^processor /proc/cpuinfo)
 echo $CPU_JOBS
 export MAKEFLAGS="-j$CPU_JOBS"
 
 print_info "Setting MAKEFLAGS for $MAKEFLAGS"
 
-ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod tools
+# Source the newly created env from make-pipeline.
 
-## ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
+. ./builder.env
+
+# Start the build process.
+
+ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod tools

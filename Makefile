@@ -28,10 +28,11 @@ prep-local:
 	@echo "Creating enviroment file..."
 	echo "set +h" > builder.env
 	echo "umask 022" >> builder.env
+	echo "MODULE_DIR=${MODULE_DIR}" >> builder.env
 	echo "ROOTFS=${ROOTFS}" >> builder.env
 	echo "LC_ALL=POSIX" >> builder.env
 	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
-	echo "PATH=/tools/bin:/bin:/usr/bin" >> builder.env
+	echo "PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin" >> builder.env
 	echo "export ROOTFS LC_ALL ROOTFS_TGT PATH" >> builder.env
 
 .PHONY: prep-pipeline
@@ -40,10 +41,11 @@ prep-pipeline:
 	@echo "Creating enviroment file..."
 	echo "set +h" > builder.env
 	echo "umask 022" >> builder.env
+	echo "MODULE_DIR=${MODULE_DIR}" >> builder.env
 	echo "ROOTFS=${ROOTFS}" >> builder.env
 	echo "LC_ALL=POSIX" >> builder.env
 	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
-	echo "PATH=/tools/bin:/bin:/usr/bin" >> builder.env
+	echo "PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin" >> builder.env
 	echo "export ROOTFS LC_ALL ROOTFS_TGT PATH" >> builder.env
 
 .PHONY: toolchain-pipeline
@@ -54,12 +56,14 @@ toolchain-pipeline:
 	export ROOTFS=${ROOTFS}
 	export ROOTFS_TGT=${ROOTFS_TGT}
 	export MODULE_DIR=${MODULE_DIR}
+	export PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin
 	ROOTFS=${ROOTFS} ROOTFS_TGT=${ROOTFS_TGT} MODULE_DIR=${MODULE_DIR} mkmod tools
 
 .PHONY: docker
 docker:
 	@echo "Creating docker images..."
-	docker build -f ./conf/docker/Dockerfile.build-os -t build-os:latest .
+	docker build -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:latest .
+	docker build -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:latest .
 
 .PHONY: install
 install:
@@ -70,8 +74,9 @@ install:
 	cp lib/libcommon.sh /usr/share/project-v/libcommon.sh
 	@echo "Installing shell commands..."
 	chmod +x scripts/mkmod
+	chmod +x scripts/addtmpl
 	cp scripts/mkmod /usr/local/bin/mkmod
-
+	cp scripts/addtmpl /usr/local/bin/addtmpl
 
 .PHONY: check
 check:

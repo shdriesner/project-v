@@ -1,0 +1,14 @@
+pkgname=diffutils
+type='pkg'
+version=3.6
+source[0]="http://ftp.gnu.org/gnu/diffutils/diffutils-3.6.tar.xz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}

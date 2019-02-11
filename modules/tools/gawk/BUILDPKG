@@ -1,0 +1,14 @@
+pkgname=gawk
+type='pkg'
+version=4.2.1
+source[0]="http://ftp.gnu.org/gnu/gawk/gawk-4.2.1.tar.xz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}

@@ -11,11 +11,10 @@ build_mod() {
     mount -vt sysfs sysfs $ROOTFS/sys
     mount -vt tmpfs tmpfs $ROOTFS/run
 
-    if [ -h $LFS/dev/shm ]; then
+    if [ -h $ROOTFS/dev/shm ]; then
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
 
-    ## Build binutils
-    load_buildpkg "$MODULE_DIR/$MODULE/linux-api-headers"
-    build
+    ## Build test
+    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "/sources/linux-api-headers"
 }

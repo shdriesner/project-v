@@ -26,4 +26,160 @@ build_mod() {
     load_buildpkg "$MODULE_DIR/$MODULE/linux-api-headers"
     cd "$ROOTFS/sources/linux-api-headers"
     build
+
+    ## Build glibc
+    load_buildpkg "$MODULE_DIR/$MODULE/glibc"
+    cd "$ROOTFS/sources/glibc"
+    build
+    test
+
+    ## Build libstdc++
+    load_buildpkg "$MODULE_DIR/$MODULE/libstdc++"
+    cd "$ROOTFS/sources/libstdc++"
+    build
+
+    ## Build binutils 2nd Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/binutils"
+    cd "$ROOTFS/sources/binutils"
+    rm -rf ./build
+    build_pass_2
+
+    ## Build gcc 2nd Pass
+    load_buildpkg "$MODULE_DIR/$MODULE/gcc"
+    cd "$ROOTFS/sources/gcc"
+    rm -rf ./build
+    build_pass_2
+    test
+
+    ## Build tcl
+    load_buildpkg "$MODULE_DIR/$MODULE/tcl"
+    cd "$ROOTFS/sources/tcl"
+    build
+
+    ## Build expect
+    load_buildpkg "$MODULE_DIR/$MODULE/expect"
+    cd "$ROOTFS/sources/expect"
+    build
+
+    ## Build dejagnu
+    load_buildpkg "$MODULE_DIR/$MODULE/dejagnu"
+    cd "$ROOTFS/sources/dejagnu"
+    build
+
+    ## Build m4
+    load_buildpkg "$MODULE_DIR/$MODULE/m4"
+    cd "$ROOTFS/sources/m4"
+    build
+
+    ## Build ncurses
+    load_buildpkg "$MODULE_DIR/$MODULE/ncurses"
+    cd "$ROOTFS/sources/ncurses"
+    build
+
+    ## Build bash
+    load_buildpkg "$MODULE_DIR/$MODULE/bash"
+    cd "$ROOTFS/sources/bash"
+    build
+
+    ## Build bison
+    load_buildpkg "$MODULE_DIR/$MODULE/bison"
+    cd "$ROOTFS/sources/bison"
+    build
+
+    ## Build bzip2
+    load_buildpkg "$MODULE_DIR/$MODULE/bzip2"
+    cd "$ROOTFS/sources/bzip2"
+    build
+
+    ## Build coreutils
+    load_buildpkg "$MODULE_DIR/$MODULE/coreutils"
+    cd "$ROOTFS/sources/coreutils"
+    build
+
+    ## Build diffutils
+    load_buildpkg "$MODULE_DIR/$MODULE/diffutils"
+    cd "$ROOTFS/sources/diffutils"
+    build
+
+    ## Build file
+    load_buildpkg "$MODULE_DIR/$MODULE/file"
+    cd "$ROOTFS/sources/file"
+    build
+
+    ## Build findutils
+    load_buildpkg "$MODULE_DIR/$MODULE/findutils"
+    cd "$ROOTFS/sources/findutils"
+    build
+
+    ## Build gawk
+    load_buildpkg "$MODULE_DIR/$MODULE/gawk"
+    cd "$ROOTFS/sources/gawk"
+    build
+
+    ## Build gettext
+    load_buildpkg "$MODULE_DIR/$MODULE/gettext"
+    cd "$ROOTFS/sources/gettext"
+    build
+
+    ## Build grep
+    load_buildpkg "$MODULE_DIR/$MODULE/grep"
+    cd "$ROOTFS/sources/grep"
+    build
+
+    ## Build gzip
+    load_buildpkg "$MODULE_DIR/$MODULE/gzip"
+    cd "$ROOTFS/sources/gzip"
+    build
+
+    ## Build make
+    load_buildpkg "$MODULE_DIR/$MODULE/make"
+    cd "$ROOTFS/sources/make"
+    build
+
+    ## Build patch
+    load_buildpkg "$MODULE_DIR/$MODULE/patch"
+    cd "$ROOTFS/sources/patch"
+    build
+
+    ## Build perl
+    load_buildpkg "$MODULE_DIR/$MODULE/perl"
+    cd "$ROOTFS/sources/perl"
+    build
+
+    ## Build sed
+    load_buildpkg "$MODULE_DIR/$MODULE/sed"
+    cd "$ROOTFS/sources/sed"
+    build
+
+    ## Build tar
+    load_buildpkg "$MODULE_DIR/$MODULE/tar"
+    cd "$ROOTFS/sources/tar"
+    build
+
+    ## Build texinfo
+    load_buildpkg "$MODULE_DIR/$MODULE/texinfo"
+    cd "$ROOTFS/sources/texinfo"
+    build
+
+    ## Build util-linux
+    load_buildpkg "$MODULE_DIR/$MODULE/util-linux"
+    cd "$ROOTFS/sources/util-linux"
+    build
+
+    ## Build xz
+    load_buildpkg "$MODULE_DIR/$MODULE/xz"
+    cd "$ROOTFS/sources/xz"
+    build
+
+    ## Strip
+    strip --strip-debug /tools/lib/*
+    /usr/bin/strip --strip-unneeded /tools/{,s}bin/*
+
+    ## Remove Docs
+    rm -rf /tools/{,share}/{info,man,doc}
+
+    ## Remove unneeded files
+    find /tools/{lib,libexec} -name \*.la -delete
+
+    chown -R root:root $ROOTFS/tools
 }

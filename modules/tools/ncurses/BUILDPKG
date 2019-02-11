@@ -1,0 +1,19 @@
+pkgname=ncurses
+type='pkg'
+version=6.1
+source[0]="http://ftp.gnu.org/gnu/ncurses/ncurses-6.1.tar.gz"
+
+build() {
+    sed -i s/mawk// configure
+
+    ./configure --prefix=/tools \
+                --with-shared   \
+                --without-debug \
+                --without-ada   \
+                --enable-widec  \
+                --enable-overwrite
+    make
+
+    make install
+}
+

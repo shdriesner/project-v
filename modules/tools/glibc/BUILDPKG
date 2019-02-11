@@ -1,0 +1,32 @@
+pkgname=glibc
+type='pkg'
+version=2.28
+source[0]="http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz"
+
+build() {
+    mkdir -v build
+    cd build
+
+    ../configure  \
+      --prefix=/tools                    \
+      --host=$ROOTFS_TGT                    \
+      --build=$(../scripts/config.guess) \
+      --enable-kernel=3.2             \
+      --with-headers=/tools/include      \
+      libc_cv_forced_unwind=yes          \
+      libc_cv_c_cleanup=yes
+
+      make
+
+      make install
+
+}
+
+test() {
+  echo "Testing glibc... -- PATH -- $PATH"
+  echo 'int main(){}' > dummy.c
+  $ROOTFS_TGT-gcc dummy.c
+  readelf -l a.out | grep ': /tools'
+
+  rm -v dummy.c a.out
+}

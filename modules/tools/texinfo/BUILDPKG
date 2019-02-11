@@ -1,0 +1,15 @@
+pkgname=texinfo
+type='pkg'
+version=6.5
+source[0]="http://ftp.gnu.org/gnu/texinfo/texinfo-6.5.tar.xz"
+
+build() {
+    ./configure --prefix=/tools
+
+    make
+
+    make check
+
+    make install
+}
+
