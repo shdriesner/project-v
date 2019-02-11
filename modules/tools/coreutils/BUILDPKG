@@ -4,11 +4,15 @@ version=8.30
 source[0]="http://ftp.gnu.org/gnu/coreutils/coreutils-8.30.tar.xz"
 
 build() {
+    echo "Running configure..."
     ./configure --prefix=/tools --enable-install-program=hostname
-
+    
+    echo "Running make..."
     make
 
+    echo "Running make check..."
     make RUN_EXPENSIVE_TESTS=yes check
 
+    echo "Running make install..."
     make install
 }
