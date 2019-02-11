@@ -53,9 +53,7 @@ toolchain-pipeline:
 	@echo "Setting MAKEFLAGS"
 	export MAKEFLAGS="-j${CPU_JOBS}"
 	@echo "Going to make the toolchain... -- ${MAKEFLAGS}"
-	export ROOTFS=${ROOTFS}
-	export ROOTFS_TGT=${ROOTFS_TGT}
-	export MODULE_DIR=${MODULE_DIR}
+	. ./builder.env
 	ROOTFS=${ROOTFS} ROOTFS_TGT=${ROOTFS_TGT} MODULE_DIR=${MODULE_DIR} mkmod tools
 
 .PHONY: docker
