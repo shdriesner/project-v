@@ -8,8 +8,6 @@ RUN chmod 777 /usr/local/bin/entry.sh
 
 RUN cd /bin/ && sudo rm sh && sudo ln -s bash sh
 
-VOLUME /work
-
 WORKDIR /work
 
 ENTRYPOINT ["/usr/local/bin/entry.sh"]
