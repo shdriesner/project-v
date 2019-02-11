@@ -12,7 +12,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: docker build -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:latest .
+  - script: make docker
     displayName: 'Build docker images'
   - script: docker run build-toolchain dev
     displayName: 'Build toolchain'
