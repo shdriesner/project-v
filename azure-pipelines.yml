@@ -22,7 +22,7 @@ jobs:
     displayName: 'Install SDK libraries and commands'
   - script: sudo make prep-pipeline
     displayName: 'Prepare root filesystem'
-  - script: . builder.env && sudo -E make toolchain-pipeline
+  - script: sudo make toolchain-pipeline
     displayName: 'Build filesystem toolchain'
   - script: tree ./rootfs -F
     condition: always()
