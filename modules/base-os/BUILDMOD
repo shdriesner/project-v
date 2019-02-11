@@ -11,7 +11,7 @@ build_mod() {
     mount -vt sysfs sysfs $ROOTFS/sys
     mount -vt tmpfs tmpfs $ROOTFS/run
 
-    if [ -h $LFS/dev/shm ]; then
+    if [ -h $ROOTFS/dev/shm ]; then
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
 
