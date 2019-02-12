@@ -10,9 +10,6 @@ build() {
     echo "Running make..."
     make
 
-    echo "Running make check..."
-    make RUN_EXPENSIVE_TESTS=yes check
-
     echo "Running make install..."
     make install
 }
