@@ -193,7 +193,7 @@ setup_source() {
     BUILDPKG_DIR=${2%/}
     DL_AGENT=$3
     
-    source $MODULE_DIR/$BUILDPKG_DIR/BUILDPKG
+    source $BUILDPKG_DIR/BUILDPKG
     
     for FILE in "${source[@]}"; do
         print_info "Checking $FILE source"
