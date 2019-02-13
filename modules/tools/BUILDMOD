@@ -172,14 +172,19 @@ build_mod() {
     build
 
     ## Strip
+    echo "Stripping debug symbols..."
     strip --strip-debug /tools/lib/*
     /usr/bin/strip --strip-unneeded /tools/{,s}bin/*
 
     ## Remove Docs
-    rm -rf /tools/{,share}/{info,man,doc}
-
+    echo "Removing docs..."
+    rm -rvf /tools/{,share}/{info,man,doc}
+    
     ## Remove unneeded files
+    echo "Remove unneeded files..."
     find /tools/{lib,libexec} -name \*.la -delete
-
-    chown -R root:root $ROOTFS/tools
+    
+    ## Change permissions
+    echo "Changing permissions..."
+    chown -vR root:root $ROOTFS/tools
 }
