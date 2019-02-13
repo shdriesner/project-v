@@ -170,7 +170,7 @@ extract_dl_file() {
 # Prereq: Need to source a BUILDPKG file before running
 # Ex. setup_source <Destination dir> <BUILDPKG dir> <DL Agent>
 setup_source() {
-    local FILE FILENAME LEN LCHAR DEST_DIR BUILDPKG_DIR
+    local FILE FILENAME LEN LCHAR DEST_DIR BUILDPKG_DIR PKG MODULE_DIR
     
     CHECK='(https|http|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]://'
     if [ "$1" == "" ] ; then
@@ -188,16 +188,12 @@ setup_source() {
         exit 1
     fi
     
+    MODULE_DIR=$4
     DEST_DIR=${1%/}
     BUILDPKG_DIR=${2%/}
     DL_AGENT=$3
     
-    if [ ! -f $BUILDPKG_DIR/$BUILDPKGBUILD/BUILDPKG ] ; then
-        print_err "No BUILDPKG file found in $BUILDPKG_DIR/$BUILDPKGBUILD/. Exiting."
-        exit 1
-    fi
-    
-    source $BUILDPKG_DIR/$BUILDPKG/BUILDPKG
+    source $MODULE_DIR/$BUILDPKG_DIR/BUILDPKG
     
     for FILE in "${source[@]}"; do
         print_info "Checking $FILE source"
@@ -210,6 +206,7 @@ setup_source() {
         
         print_info "Creating package directory"
         mkdir -p "$DEST_DIR/$pkgname"
+        print_info "Copying BUILDPKG to package directory"
         
         if [ "$FILENAME" != "$FILE" ] ; then
             download_agent "$FILE" "$DEST_DIR/$pkgname" "$FILENAME" "$DL_AGENT"
