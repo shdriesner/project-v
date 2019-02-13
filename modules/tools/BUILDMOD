@@ -173,8 +173,8 @@ build_mod() {
 
     ## Strip
     echo "Stripping debug symbols..."
-    strip --strip-debug /tools/lib/*
-    /usr/bin/strip --strip-unneeded /tools/{,s}bin/*
+    /tools/bin/find /usr/lib -type f -name \*.a -exec /tools/bin/strip --strip-debug {} ';'
+    /tools/bin/find /lib /usr/lib -type f \( -name \*.so* -a ! -name \*dbg \) -exec /tools/bin/strip --strip-unneeded {} ';'
 
     ## Remove Docs
     echo "Removing docs..."
