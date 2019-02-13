@@ -170,7 +170,7 @@ extract_dl_file() {
 # Prereq: Need to source a BUILDPKG file before running
 # Ex. setup_source <Destination dir> <BUILDPKG dir> <DL Agent>
 setup_source() {
-    local FILE FILENAME LEN LCHAR DEST_DIR BUILDPKG_DIR PKG MODULE_DIR
+    local FILE FILENAME LEN LCHAR DEST_DIR BUILDPKG_DIR PKG
     
     CHECK='(https|http|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]://'
     if [ "$1" == "" ] ; then
@@ -188,9 +188,8 @@ setup_source() {
         exit 1
     fi
     
-    MODULE_DIR=$4
     DEST_DIR=${1%/}
-    BUILDPKG_DIR=${2%/}
+    BUILDPKG_DIR=${2%/} ## Full path to the package in a module.
     DL_AGENT=$3
     
     source $BUILDPKG_DIR/BUILDPKG

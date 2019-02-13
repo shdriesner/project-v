@@ -95,7 +95,7 @@ for d in $MODULE_DIR/$1/* ; do
     if [ "$d" == "$MODULE_DIR/$1/BUILDMOD" ] ; then
       continue
     fi
-    setup_source "$ROOTFS/sources" "$d" curl $MODULE_DIR
+    setup_source "$ROOTFS/sources" "$d" curl
 done
 
 print_info "Building module for $1"
