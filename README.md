@@ -108,11 +108,11 @@ docker run build-toolchain dev ## Dev Branch
 ```
 4. Build the base-os. 
 ```
-docker run build-base-os ## Master Branch
+docker run --privileged build-base-os ## Master Branch
 ```
 or
 ```
-docker run build-base-os dev ## Dev Branch
+docker run --privileged build-base-os dev ## Dev Branch
 ```
 
 _`build-base-os` will take a prebuilt toolchain from Github to build the base-os module._

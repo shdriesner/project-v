@@ -280,7 +280,7 @@ do_build_chroot_with_tools() {
   CHROOT_DIR=$1
   PKG_DIR=$2
   
-  check_chroot $CHROOT_DIR $PKG_DIR
+  check_chroot_with_tools $CHROOT_DIR $PKG_DIR
   
   print_info "Going to build inside /$PKG_DIR"
   
