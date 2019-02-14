@@ -282,9 +282,9 @@ do_build_chroot_with_tools() {
   
   check_chroot_with_tools $CHROOT_DIR $PKG_DIR
   
-  print_info "Going to build inside /$PKG_DIR"
+  print_info "Going to build inside /sources/$PKG_DIR"
   
-  chroot "$LFS" /tools/bin/env -i \
+  chroot "$CHROOT_DIR" /tools/bin/env -i \
     HOME=/root                  \
     TERM="$TERM"                \
     PS1='(project-v chroot) \u:\w\$ ' \
