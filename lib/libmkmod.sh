@@ -255,7 +255,7 @@ check_chroot_with_tools() {
       exit 1
   fi
   
-  if [ -d "$CHROOT_DIR" ] ; then
+  if [ ! -d "$CHROOT_DIR" ] ; then
       print_err "Chroot parameter points to a non-directory."
       exit 1
   fi
