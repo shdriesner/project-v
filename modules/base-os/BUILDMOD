@@ -15,6 +15,6 @@ build_mod() {
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
 
-    ## Build test
-    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "/sources/linux-api-headers"
+    ## Build linux-api-headers
+    do_build_chroot_with_tools $ROOTFS linux-api-headers
 }

@@ -61,7 +61,9 @@ prep_env () {
 
     wget https://github.com/junland/project-v/releases/download/0.0.1-alpha/x86_64-project_v-linux-gnu.tar.gz
 
-    tar -xf ./x86_64-project_v-linux-gnu.tar.gz -C ./rootfs/tools
+    print_info "Unpacking toolchain"
+
+    tar -xvf ./x86_64-project_v-linux-gnu.tar.gz -C ./rootfs/tools
 
     print_ok "Done."
 }

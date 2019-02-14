@@ -119,6 +119,7 @@ download_agent() {
     
 }
 
+# extract_dl_file extracts a file and places it within a directory.
 extract_dl_file() {
     local FILE FILE_TYPE
     
@@ -219,7 +220,7 @@ setup_source() {
     done
 }
 
-## load_buildpkg is a helper fucntion to load a buildpkg file within a module.
+# load_buildpkg is a helper fucntion to load a buildpkg file within a module.
 load_buildpkg() {
 
     if [ "$1" == "" ] ; then
@@ -243,25 +244,50 @@ load_buildpkg() {
     print_ok "Done loading $BUILDPKG_DIR/BUILDPKG"
 }
 
-chroot_build() {
-    local CD_DIR
-    # just to be safe we will load BUILDPKG inside this function.
-    load_buildpkg $1
+check_chroot_with_tools() {
+  local CHROOT_DIR PKG_DIR
+  
+  CHROOT_DIR=$1
+  PKG_DIR=$2
+  
+  if [ -z "$CHROOT_DIR" ] ; then
+      print_err "No chroot parameter has been passed."
+      exit 1
+  fi
+  
+  if [ -d "$CHROOT_DIR" ] ; then
+      print_err "Chroot parameter points to a non-directory."
+      exit 1
+  fi
+  
+  if [ -z "$PKG_DIR" ] ; then
+      print_err "No package directory has been passed."
+      exit 1
+  fi
+  
+  if [ -d "$CHROOT_DIR/$PKG_DIR" ] ; then
+      print_err "Package directory does not exist inside chroot directory. -- $CHROOT_DIR/$PKG_DIR"
+      exit 1
+  fi
+}
 
-    if type 'build' | grep -q 'function' > /dev/null ; then
-      print_ok "Looks like we are able to find build()"
-    fi
+# do_build_chroot_with_tools is used when you the root filesystem has a toolchain present. This is configured with the standard LFS
+# bash lookup path.
+# do_build_chroot_with_tools <dir of chroot> <name of pkg> 
+do_build_chroot_with_tools() {
+  local CHROOT_DIR PKG_DIR
 
-    CD_DIR=$1
-
-    export -f build
-
-    print_info "Building package from $1"
-
-    chroot "$LFS" /tools/bin/env -i \
-                  HOME=/root        \
-                  TERM="$TERM"      \
-                  PS1='(PV chroot) \u:\w\$ ' \
-                  PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
-                  /tools/bin/bash -c "cd $CD_DIR && build"
+  CHROOT_DIR=$1
+  PKG_DIR=$2
+  
+  check_chroot $CHROOT_DIR $PKG_DIR
+  
+  print_info "Going to build inside /$PKG_DIR"
+  
+  chroot "$LFS" /tools/bin/env -i \
+    HOME=/root                  \
+    TERM="$TERM"                \
+    PS1='(project-v chroot) \u:\w\$ ' \
+    PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
+	/tools/bin/bash -c "cd /sources/$PKG_DIR && . ./BUILDPKG && build"
 }
