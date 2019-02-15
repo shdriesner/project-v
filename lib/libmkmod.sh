@@ -214,7 +214,7 @@ setup_source() {
             print_ok "Download complete for $FILE"
             extract_dl_file "$DEST_DIR/$pkgname/$FILENAME" "$DEST_DIR/$pkgname"
         else
-            print_info "Placing $FILE into $BASE_DEST/$pkgname"
+            print_info "Placing $BUILDPKG_DIR/$FILE into $DEST_DIR/$pkgname/"
             cp "$BUILDPKG_DIR/$FILE" "$DEST_DIR/$pkgname/"
         fi
     done
