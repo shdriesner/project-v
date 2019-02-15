@@ -17,3 +17,6 @@ jobs:
   - script: docker run build-toolchain dev
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
     displayName: 'Build toolchain'
+  - script: docker run --privileged build-base-os -b dev
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
+    displayName: 'Build base-os'
