@@ -218,6 +218,8 @@ setup_source() {
             cp "$BUILDPKG_DIR/$FILE" "$DEST_DIR/$pkgname/"
         fi
     done
+
+    unset source
 }
 
 # load_buildpkg is a helper fucntion to load a buildpkg file within a module.
