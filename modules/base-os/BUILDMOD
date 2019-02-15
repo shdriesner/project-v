@@ -18,4 +18,10 @@ build_mod() {
 
     ## Build linux-api-headers
     do_build_chroot_with_tools $ROOTFS linux-api-headers
+
+    ## Build man-pages
+    do_build_chroot_with_tools $ROOTFS man-pages
+
+    ## Build glibc
+    do_build_chroot_with_tools $ROOTFS glbic
 }

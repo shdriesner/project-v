@@ -1,0 +1,9 @@
+pkgname=man-pages
+type='pkg'
+version=4.16
+source[0]="https://www.kernel.org/pub/linux/docs/man-pages/man-pages-4.16.tar.xz"
+
+build() {
+    make install
+}
+

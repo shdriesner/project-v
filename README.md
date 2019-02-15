@@ -112,7 +112,7 @@ docker run --privileged build-base-os ## Master Branch
 ```
 or
 ```
-docker run --privileged build-base-os dev ## Dev Branch
+docker run --privileged build-base-os -b dev ## Dev Branch
 ```
 
 _`build-base-os` will take a prebuilt toolchain from Github to build the base-os module._
