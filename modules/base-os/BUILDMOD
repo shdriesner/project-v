@@ -26,5 +26,5 @@ build_mod() {
     do_build_chroot_with_tools $ROOTFS man-pages
 
     ## Build glibc
-    do_build_chroot_with_tools $ROOTFS glbic
+    do_build_chroot_with_tools $ROOTFS glibc
 }
