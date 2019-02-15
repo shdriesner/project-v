@@ -1,7 +1,8 @@
-name='tools'
+name='base-os'
 type='module'
 
 build_mod() {
+    # Setup chroot
     mkdir -pv $ROOTFS/{dev,proc,sys,run}
     mknod -m 600 $ROOTFS/dev/console c 5 1
     mknod -m 666 $ROOTFS/dev/null c 1 3

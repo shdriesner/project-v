@@ -7,4 +7,12 @@ build() {
     echo "This will be filled in by the chroot"
     pwd
     pwd > HI_FROM_CHROOT
+
+    make mrproper
+
+    make INSTALL_HDR_PATH=dest headers_install
+
+    find dest/include \( -name .install -o -name ..install.cmd \) -delete
+
+    cp -rv dest/include/* /usr/include
 }
