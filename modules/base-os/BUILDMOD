@@ -19,7 +19,7 @@ build_mod() {
     echo "#"
     echo "# add link"
     echo "#"
-    chroot $ROOTFS /tools/bin/bash -c "ln -s /bin/bash /bin/sh"
+    chroot $ROOTFS /tools/bin/bash -c "mkdir /bin && ln -s /bin/bash /bin/sh"
 
     ## Build linux-api-headers
     do_build_chroot_with_tools $ROOTFS linux-api-headers
