@@ -204,7 +204,7 @@ setup_source() {
             FILENAME=$(basename "$FILE")
         fi
         
-        print_info "Creating package directory"
+        print_info "Creating package directory -- $DEST_DIR/$pkgname"
         mkdir -p "$DEST_DIR/$pkgname"
         print_info "Copying BUILDPKG to package directory -- $pkgname"
         cp $BUILDPKG_DIR/BUILDPKG $DEST_DIR/$pkgname/BUILDPKG
