@@ -206,7 +206,7 @@ setup_source() {
         
         print_info "Creating package directory"
         mkdir -p "$DEST_DIR/$pkgname"
-        print_info "Copying BUILDPKG to package directory"
+        print_info "Copying BUILDPKG to package directory -- $pkgname"
         cp $BUILDPKG_DIR/BUILDPKG $DEST_DIR/$pkgname/BUILDPKG
         
         if [ "$FILENAME" != "$FILE" ] ; then
