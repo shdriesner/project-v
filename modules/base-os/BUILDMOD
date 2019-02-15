@@ -15,6 +15,11 @@ build_mod() {
     if [ -h $ROOTFS/dev/shm ]; then
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
+    
+    echo "#"
+    echo "# add link"
+    echo "#"
+    chroot $ROOTFS /tools/bin/bash -c "ln -s /bin/bash /bin/sh
 
     ## Build linux-api-headers
     do_build_chroot_with_tools $ROOTFS linux-api-headers
