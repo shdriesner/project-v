@@ -27,4 +27,7 @@ build_mod() {
 
     ## Build glibc
     do_build_chroot_with_tools $ROOTFS glibc
+
+    ## Adjust toolchain
+    do_build_chroot_with_tools $ROOTFS adjust-tools
 }

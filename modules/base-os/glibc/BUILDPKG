@@ -4,6 +4,7 @@ version=2.28
 source[0]="http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz"
 source[1]="glibc-2.28-fhs-1.patch"
 source[2]="tzdata2018e.tar.gz"
+source[3]
 
 build() {
     patch -Np1 -i ../glibc-2.28-fhs-1.patch
@@ -72,42 +73,23 @@ build() {
 
     make localedata/install-locales
 
-    cat > /etc/nsswitch.conf << "EOF"
-    # Begin /etc/nsswitch.conf
+    cp -v ../nsswitch.conf /etc/nsswitch.conf
 
-    passwd: files
-    group: files
-    shadow: files
+    cp -v ../tzdata2018e.tar.gz ../../tzdata2018e.tar.gz
+   
+    tar -xvf ../../tzdata2018e.tar.gz
 
-    hosts: files dns
-    networks: files
+    ZONEINFO=/usr/share/zoneinfo
+    mkdir -pv $ZONEINFO/{posix,right}
 
-    protocols: files
-    services: files
-    ethers: files
-    rpc: files
+    for tz in etcetera southamerica northamerica europe africa antarctica asia australasia backward pacificnew systemv; do
+        zic -L /dev/null   -d $ZONEINFO       -y "sh yearistype.sh" ${tz}
+        zic -L /dev/null   -d $ZONEINFO/posix -y "sh yearistype.sh" ${tz}
+        zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${tz}
+    done
 
-    # End /etc/nsswitch.conf
-EOF
-    
-   tar -xvf ../../tzdata2018e.tar.gz
+    cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
+    zic -d $ZONEINFO -p America/New_York
 
-   ZONEINFO=/usr/share/zoneinfo
-   mkdir -pv $ZONEINFO/{posix,right}
-
-   for tz in etcetera southamerica northamerica europe africa antarctica asia australasia backward pacificnew systemv; do
-       zic -L /dev/null   -d $ZONEINFO       -y "sh yearistype.sh" ${tz}
-       zic -L /dev/null   -d $ZONEINFO/posix -y "sh yearistype.sh" ${tz}
-       zic -L leapseconds -d $ZONEINFO/right -y "sh yearistype.sh" ${tz}
-   done
-
-   cp -v zone.tab zone1970.tab iso3166.tab $ZONEINFO
-   zic -d $ZONEINFO -p America/New_York
-   unset ZONEINFO
-
-   cat > /etc/ld.so.conf << "EOF"
-   # Begin /etc/ld.so.conf
-   /usr/local/lib
-   /opt/lib
-EOF
+    cp -v ../ld.so.conf /etc/ld.so.conf
 }
