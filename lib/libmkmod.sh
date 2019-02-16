@@ -284,7 +284,7 @@ do_build_chroot_with_tools() {
   
   check_chroot_with_tools $CHROOT_DIR $PKG_DIR
   
-  print_info "Going to build inside /sources/$PKG_DIR"
+  print_info "Going to build inside chroot in /sources/$PKG_DIR"
   
   chroot "$CHROOT_DIR" /tools/bin/env -i \
     HOME=/root                  \
