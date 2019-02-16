@@ -29,6 +29,9 @@ build() {
 
     echo "=====> Verify compiler..."
     grep "/lib.*/libc.so.6 " dummy.log
+
+    echo "=====> Verify compiler is using correct dynamic linker..."
+    grep found dummy.log
     
     echo "=====> Cleaning up..."
     rm -v dummy.c a.out dummy.log
