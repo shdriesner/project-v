@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Set default variables.
+OPTIND=1
+BRANCH="master"
+
 # colors
 RESTORE=$(echo -en '\033[0m') # This will terminate the color variables.
 RED=$(echo -en '\033[00;31m')
@@ -36,13 +40,46 @@ print_ok() {
         echo "${GREEN}=====> $1 ${RESTORE}"
 }
 
-prep_env () {
-    print_info "Cloning Project V Repository"
-    git clone https://github.com/junland/project-v.git
+usage() {
+        echo "build-toolchain usage: build-toolchain [-b BRANCH NAME]" >&2
+        exit 1
+}
 
+while getopts 'hb:' OPTION; do
+  case "$OPTION" in
+    b)
+      BRANCH="$OPTARG"
+      ;;
+    h)
+      usage
+      ;;
+    ?)
+      usage
+      ;;
+  esac
+done
+shift "$(($OPTIND -1))"
+
+print_info "$BRANCH branch selected"
+
+prep_env () {
+    cd /work
+    
+    mkdir project-v
+    
     cd project-v
 
-    if [ $1 == "dev" ] ; then
+    git init .
+
+    git remote add origin https://github.com/junland/project-v
+
+    git pull
+
+    git pull origin master
+
+    git pull
+
+    if [ $BRANCH == "dev" ] ; then
       print_info "Checking out dev branch"
       git checkout dev
     fi
@@ -55,22 +92,34 @@ prep_env () {
 
     make prep-pipeline
 
+    print_info "Linking tools to host system... (This can be deleted later)"
+    mkdir -p "/work/project-v/rootfs/tools"
+    ln -sv "/work/project-v/rootfs/tools" /
+
+    print_info "Unpacking toolchain"
+
+    tar -xavf ./toolchain.compressed -C ./rootfs/tools
+
     print_ok "Done."
 }
 
-prep_env $1
+run() {
+    # Set any variables here.
+    CPU_JOBS=$(grep -c ^processor /proc/cpuinfo)
+    echo $CPU_JOBS
+    export MAKEFLAGS="-j$CPU_JOBS"
 
-# Set any variables here.
-CPU_JOBS=$(grep -c ^processor /proc/cpuinfo)
-echo $CPU_JOBS
-export MAKEFLAGS="-j$CPU_JOBS"
+    print_info "Setting MAKEFLAGS for $MAKEFLAGS"
 
-print_info "Setting MAKEFLAGS for $MAKEFLAGS"
+    # Source the newly created env from make-pipeline.
 
-# Source the newly created env from make-pipeline.
+    . ./builder.env
 
-. ./builder.env
+    # Start the build process.
 
-# Start the build process.
+    FORCE_UNSAFE_CONFIGURE=1 ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
+}
 
-FORCE_UNSAFE_CONFIGURE=1 ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod tools
+prep_env
+
+run
