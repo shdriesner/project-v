@@ -215,7 +215,7 @@ setup_source() {
             extract_dl_file "$DEST_DIR/$pkgname/$FILENAME" "$DEST_DIR/$pkgname"
         else
             print_info "Placing $BUILDPKG_DIR/$FILE into $DEST_DIR/$pkgname/"
-            cp "$BUILDPKG_DIR/$FILE" "$DEST_DIR/$pkgname/"
+            cp -r "$BUILDPKG_DIR/$FILE" "$DEST_DIR/$pkgname/"
         fi
     done
 
