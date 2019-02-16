@@ -30,4 +30,10 @@ build_mod() {
 
     ## Adjust toolchain
     do_build_chroot_with_tools $ROOTFS adjust-tools
+
+    ## Build zlib
+    do_build_chroot_with_tools $ROOTFS zlib
+
+    ## Build file
+    do_build_chroot_with_tools $ROOTFS file
 }
