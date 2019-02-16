@@ -36,4 +36,13 @@ build_mod() {
 
     ## Build file
     do_build_chroot_with_tools $ROOTFS file
+
+    ## Build readline
+    do_build_chroot_with_tools $ROOTFS readline
+
+    ## Build m4
+    do_build_chroot_with_tools $ROOTFS m4
+
+    ## Build bc
+    do_build_chroot_with_tools $ROOTFS bc
 }
