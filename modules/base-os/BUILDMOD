@@ -45,4 +45,7 @@ build_mod() {
 
     ## Build bc
     do_build_chroot_with_tools $ROOTFS bc
+
+    ## Build binutils
+    do_build_chroot_with_tools $ROOTFS binutils
 }
