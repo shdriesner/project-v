@@ -48,4 +48,7 @@ build_mod() {
 
     ## Build binutils
     do_build_chroot_with_tools $ROOTFS binutils
+
+    ## Build gmp
+    do_build_chroot_with_tools $ROOTFS gmp
 }

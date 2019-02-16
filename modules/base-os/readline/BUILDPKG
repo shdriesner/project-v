@@ -1,7 +1,7 @@
 pkgname=readline
 type='pkg'
 version=7.0
-source[0]="http://ftp.gnu.org/gnu/readline/$pkgname-$version.tar.gz"
+source[0]="http://ftp.gnu.org/gnu/$pkgname/$pkgname-$version.tar.gz"
 
 build() {
     sed -i '/MV.*old/d' Makefile.in

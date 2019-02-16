@@ -1,7 +1,7 @@
 pkgname=bc
 type='pkg'
 version=1.07.1 
-source[0]="http://ftp.gnu.org/gnu/bc/$pkgname-$version.tar.gz"
+source[0]="http://ftp.gnu.org/gnu/$pkgname/$pkgname-$version.tar.gz"
 
 build() {
     cat > bc/fix-libmath_h << "EOF"

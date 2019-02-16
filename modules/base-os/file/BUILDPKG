@@ -1,7 +1,7 @@
 pkgname=file
 type='pkg'
 version=5.34
-source[0]="ftp://ftp.astron.com/pub/file/$pkgname-$version.tar.gz"
+source[0]="ftp://ftp.astron.com/pub/$pkgname/$pkgname-$version.tar.gz"
 
 build() {
    ./configure --prefix=/usr
