@@ -3,6 +3,7 @@ type='pkg'
 version=2.28
 source[0]="http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz"
 source[1]="glibc-2.28-fhs-1.patch"
+source[2]="tzdata2018e.tar.gz"
 
 build() {
     patch -Np1 -i ../glibc-2.28-fhs-1.patch
@@ -89,7 +90,7 @@ build() {
     # End /etc/nsswitch.conf
 EOF
     
-    tar -xf ../../tzdata2018e.tar.gz
+   tar -xvf ../../tzdata2018e.tar.gz
 
    ZONEINFO=/usr/share/zoneinfo
    mkdir -pv $ZONEINFO/{posix,right}
