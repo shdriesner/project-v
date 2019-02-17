@@ -10,7 +10,7 @@ build() {
 
     ./configure --prefix=/usr \
             --disable-static \
-            --docdir=/usr/share/doc/readline-7.0
+            --docdir=/usr/share/doc/readline
 
     make SHLIB_LIBS="-L/tools/lib -lncursesw"
 
