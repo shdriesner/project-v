@@ -57,4 +57,7 @@ build_mod() {
 
     ## Build mpc
     do_build_chroot_with_tools $ROOTFS mpc
+
+    ## Build shadow
+    do_build_chroot_with_tools $ROOTFS shadow
 }
