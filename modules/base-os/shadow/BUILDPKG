@@ -26,7 +26,7 @@ build() {
 
     grpconv
 
-    ## Set password for root
+    ## Set password for root as "havefun"
     echo "Setting password for root..."
     usermod -p '$1$LPEMkYv6$/G1Ac9PmmPWoH7ZSnc6aD0' root
 }
