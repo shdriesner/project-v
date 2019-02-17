@@ -62,7 +62,7 @@ build_mod() {
     do_build_chroot_with_tools $ROOTFS shadow
 
     ## Build gcc
-    do_build_chroot_with_tools $ROOTFS gcc
+    do_build_chroot_with_tools $ROOTFS gcc | tee base-os-gcc.log
 
     ## Build bzip2
     do_build_chroot_with_tools $ROOTFS bzip2
