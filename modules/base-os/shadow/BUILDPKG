@@ -28,5 +28,5 @@ build() {
 
     ## Set password for root
     echo "Setting password for root..."
-    echo '0:havefun' | chpasswd
+    usermod -p '$1$LPEMkYv6$/G1Ac9PmmPWoH7ZSnc6aD0' root
 }
