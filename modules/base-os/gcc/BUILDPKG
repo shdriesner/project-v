@@ -34,6 +34,8 @@ build() {
 
     su nobody -s /bin/bash -c "PATH=$PATH make -k check"
 
+    echo "=====> Here is more of a summary of the check."
+
     ../contrib/test_summary
 
     make install
