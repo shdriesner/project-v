@@ -60,4 +60,7 @@ build_mod() {
 
     ## Build shadow
     do_build_chroot_with_tools $ROOTFS shadow
+
+    ## Build gcc
+    do_build_chroot_with_tools $ROOTFS gcc
 }
