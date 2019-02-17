@@ -56,10 +56,13 @@ build() {
     echo "=====> Verify start files..."
     grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
     
-    echo "=====> Verify linker..."
+    echo "=====> Verify compiler is searching for the correct header files..."
     grep -B4 '^ /usr/include' dummy.log
     
-    echo "=====> Verify libc..."
+    echo "=====> Verify linker search path..."
+    grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+
+    echo "=====> Verify if we are using correct libc..."
     grep "/lib.*/libc.so.6 " dummy.log
 
     echo "=====> Verify dynamic linker..."
