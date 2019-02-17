@@ -63,4 +63,7 @@ build_mod() {
 
     ## Build gcc
     do_build_chroot_with_tools $ROOTFS gcc
+
+    ## Build bzip2
+    do_build_chroot_with_tools $ROOTFS bzip2
 }

@@ -27,5 +27,8 @@ echo "type='pkg'" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
 echo "version=" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
 echo "source[0]=" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
 echo "" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "build() {" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "   " >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
+echo "}" >> "$MODULE_DIR/$MOD/$PKG/BUILDPKG"
 
 exit 0
