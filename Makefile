@@ -32,7 +32,7 @@ prep-local:
 	echo "ROOTFS=${ROOTFS}" >> builder.env
 	echo "LC_ALL=POSIX" >> builder.env
 	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
-	echo "PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin" >> builder.env
+	echo "PATH=/tools/bin:/bin:/usr/bin:/sbin:/usr/local/bin" >> builder.env
 	echo "export ROOTFS LC_ALL ROOTFS_TGT PATH" >> builder.env
 
 .PHONY: prep-pipeline
