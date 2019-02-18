@@ -13,7 +13,7 @@ RUN groupadd projv \
  && echo "projv:linux" | chpasswd
 RUN adduser projv sudo
 
-RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote add origin https://github.com/junland/project-v && git pull origin master
+RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote add origin https://github.com/junland/project-v && git pull origin dev
 
 RUN chown projv:projv -R /work/project-v
 
