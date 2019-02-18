@@ -94,7 +94,7 @@ prep_env () {
 
     print_info "Linking tools to host system... (This can be deleted later)"
     mkdir -p "/work/project-v/rootfs/tools"
-    ln -sv "/work/project-v/rootfs/tools" /
+    ln -sfv "/work/project-v/rootfs/tools" /
 
     print_info "Unpacking toolchain"
 
