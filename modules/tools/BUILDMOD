@@ -4,8 +4,6 @@ type='module'
 build_mod() {
     ## Create tools directory outside of sources staging directory.
     mkdir -p "$ROOTFS/tools"
-    
-    echo "=====> Linking tools to host system... (This can be deleted later)"
 
     ## Build binutils 1st Pass
     load_buildpkg "$MODULE_DIR/$MODULE/binutils"
@@ -185,5 +183,5 @@ build_mod() {
     
     ## Change permissions
     echo "Changing permissions..."
-    chown -vR root:root $ROOTFS/tools
+    sudo chown -vR root:root $ROOTFS/tools
 }
