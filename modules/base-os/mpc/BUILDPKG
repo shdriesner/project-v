@@ -1,0 +1,21 @@
+pkgname=mpc
+type='pkg'
+version=1.1.0 
+source[0]="https://ftp.gnu.org/gnu/$pkgname/$pkgname-$version.tar.gz"
+
+build() {
+    ./configure --prefix=/usr \
+            --disable-static \
+            --docdir=/usr/share/doc/mpc
+    
+    make
+
+    make html
+
+    make check
+
+    make install
+
+    make install-html
+}
+

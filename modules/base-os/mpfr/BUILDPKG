@@ -1,0 +1,22 @@
+pkgname=mpfr
+type='pkg'
+version=4.0.1
+source[0]="http://www.mpfr.org/$pkgname-$version/$pkgname-$version.tar.xz"
+
+build() {
+    ./configure --prefix=/usr        \
+            --disable-static     \
+            --enable-thread-safe \
+            --docdir=/usr/share/doc/mpfr
+
+    make
+
+    make html
+
+    make check
+
+    make install
+
+    make install-html
+}
+

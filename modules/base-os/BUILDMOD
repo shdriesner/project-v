@@ -1,7 +1,8 @@
-name='tools'
+name='base-os'
 type='module'
 
 build_mod() {
+    # Setup chroot
     mkdir -pv $ROOTFS/{dev,proc,sys,run}
     mknod -m 600 $ROOTFS/dev/console c 5 1
     mknod -m 666 $ROOTFS/dev/null c 1 3
@@ -15,6 +16,54 @@ build_mod() {
       mkdir -pv $ROOTFS/$(readlink $ROOTFS/dev/shm)
     fi
 
-    ## Build test
-    chroot_build "$MODULE_DIR/$MODULE/linux-api-headers" "/sources/linux-api-headers"
+    ## Build filesystem
+    do_build_chroot_with_tools $ROOTFS filesystem
+
+    ## Build linux-api-headers
+    do_build_chroot_with_tools $ROOTFS linux-api-headers
+
+    ## Build man-pages
+    do_build_chroot_with_tools $ROOTFS man-pages
+
+    ## Build glibc
+    do_build_chroot_with_tools $ROOTFS glibc
+
+    ## Adjust toolchain
+    do_build_chroot_with_tools $ROOTFS adjust-tools
+
+    ## Build zlib
+    do_build_chroot_with_tools $ROOTFS zlib
+
+    ## Build file
+    do_build_chroot_with_tools $ROOTFS file
+
+    ## Build readline
+    do_build_chroot_with_tools $ROOTFS readline
+
+    ## Build m4
+    do_build_chroot_with_tools $ROOTFS m4
+
+    ## Build bc
+    do_build_chroot_with_tools $ROOTFS bc
+
+    ## Build binutils
+    do_build_chroot_with_tools $ROOTFS binutils
+
+    ## Build gmp
+    do_build_chroot_with_tools $ROOTFS gmp
+
+    ## Build mpfr
+    do_build_chroot_with_tools $ROOTFS mpfr
+
+    ## Build mpc
+    do_build_chroot_with_tools $ROOTFS mpc
+
+    ## Build shadow
+    do_build_chroot_with_tools $ROOTFS shadow
+
+    ## Build gcc
+    do_build_chroot_with_tools $ROOTFS gcc | tee base-os-gcc.log
+
+    ## Build bzip2
+    do_build_chroot_with_tools $ROOTFS bzip2
 }

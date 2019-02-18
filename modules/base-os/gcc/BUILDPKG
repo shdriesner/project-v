@@ -1,0 +1,79 @@
+pkgname=gcc
+type='pkg'
+version=8.2.0
+source[0]="http://ftp.gnu.org/gnu/gcc/$pkgname-$version/$pkgname-$version.tar.xz"
+
+build() {
+    case $(uname -m) in
+      x86_64)
+        sed -e '/m64=/s/lib64/lib/' \
+             -i.orig gcc/config/i386/t-linux64
+        ;;
+    esac
+
+    rm -f /usr/lib/gcc
+
+    mkdir -v build
+    cd build
+
+    SED=sed                               \
+    ../configure --prefix=/usr            \
+             --enable-languages=c,c++ \
+             --disable-multilib       \
+             --disable-bootstrap      \
+             --disable-libmpx         \
+             --with-system-zlib
+    
+    make
+
+    ulimit -s 32768
+
+    rm ../gcc/testsuite/g++.dg/pr83239.C
+
+    chown -Rv nobody . 
+
+    su nobody -s /bin/bash -c "PATH=$PATH make -k check"
+
+    echo "=====> Here is more of a summary of the check."
+
+    ../contrib/test_summary | grep -A7 Summ
+
+    make install
+
+    ln -sv ../usr/bin/cpp /lib
+
+    ln -sv gcc /usr/bin/cc
+
+    install -v -dm755 /usr/lib/bfd-plugins
+    ln -sfv ../../libexec/gcc/$(gcc -dumpmachine)/8.2.0/liblto_plugin.so \
+            /usr/lib/bfd-plugins/
+
+    echo "=====> Checking gcc..."
+    echo 'int main(){}' > dummy.c
+    cc dummy.c -v -Wl,--verbose &> dummy.log
+    readelf -l a.out | grep ': /lib'
+    
+    echo "=====> Verify start files..."
+    grep -o '/usr/lib.*/crt[1in].*succeeded' dummy.log
+    
+    echo "=====> Verify compiler is searching for the correct header files..."
+    grep -B4 '^ /usr/include' dummy.log
+    
+    echo "=====> Verify linker search path..."
+    grep 'SEARCH.*/usr/lib' dummy.log |sed 's|; |\n|g'
+
+    echo "=====> Verify if we are using correct libc..."
+    grep "/lib.*/libc.so.6 " dummy.log
+
+    echo "=====> Verify dynamic linker..."
+    grep found dummy.log
+    
+    echo "=====> Cleaning up..."
+    rm -v dummy.c a.out dummy.log
+
+    echo "=====> Move misplaced file..."
+    mkdir -pv /usr/share/gdb/auto-load/usr/lib
+    mv -v /usr/lib/*gdb.py /usr/share/gdb/auto-load/usr/lib
+
+}
+
