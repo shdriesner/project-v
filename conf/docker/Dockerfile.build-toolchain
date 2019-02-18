@@ -17,6 +17,8 @@ RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote a
 
 RUN chown projv:projv -R /work/project-v
 
+RUN echo "projv ALL = NOPASSWD : ALL" >> /etc/sudoers
+
 USER projv
 
 WORKDIR /work
