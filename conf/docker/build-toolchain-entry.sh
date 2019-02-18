@@ -84,7 +84,7 @@ prep_env () {
       git checkout dev
     fi
     
-    make install
+    sudo make install
 
     make clean
 
