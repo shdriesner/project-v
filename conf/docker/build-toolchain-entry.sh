@@ -63,21 +63,21 @@ shift "$(($OPTIND -1))"
 print_info "$BRANCH branch selected"
 
 prep_env () {
-    cd /work
+    cd /work/project-v
     
-    mkdir project-v
+    #mkdir project-v
     
-    cd project-v
+    #cd project-v
 
-    git init .
+    #git init .
 
-    git remote add origin https://github.com/junland/project-v
+    #git remote add origin https://github.com/junland/project-v
 
-    git pull
+    #git pull
 
-    git pull origin master
+    #git pull origin master
 
-    git pull
+    #git pull
 
     if [ $BRANCH == "dev" ] ; then
       print_info "Checking out dev branch"
@@ -91,14 +91,16 @@ prep_env () {
     make check
 
     make prep-pipeline
+    
+    mkdir -p rootfs/sources
+    mkdir -p rootfs/tools
+    
+    chown -v projv rootfs/sources
+    chown -v projv rootfs/tools
 
     print_info "Linking tools to host system... (This can be deleted later)"
-    mkdir -p "/work/project-v/rootfs/tools"
-    ln -sfv "/work/project-v/rootfs/tools" /
-
-    print_info "Unpacking toolchain"
-
-    tar -xavf ./toolchain.compressed -C ./rootfs/tools
+    
+    sudo ln -sv "/work/project-v/rootfs/tools" /
 
     print_ok "Done."
 }
