@@ -137,7 +137,7 @@ run() {
 
     # Start the build process.
 
-    FORCE_UNSAFE_CONFIGURE=1 ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
+    ROOTFS=/work/project-v/rootfs ROOTFS_TGT=x86_64-project_v-linux-gnu MODULE_DIR=/work/project-v/modules mkmod base-os
 }
 
 prep_env

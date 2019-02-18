@@ -16,7 +16,7 @@ build() {
     mkdir -v build
     cd build
 
-    SED=sed                               \
+    SED=sed \
     ../configure --prefix=/usr            \
              --enable-languages=c,c++ \
              --disable-multilib       \
