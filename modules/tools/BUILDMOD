@@ -6,7 +6,7 @@ build_mod() {
     mkdir -p "$ROOTFS/tools"
     
     echo "=====> Linking tools to host system... (This can be deleted later)"
-    ln -sfv "$ROOTFS/tools" /
+    #ln -sfv "$ROOTFS/tools" /
 
     ## Build binutils 1st Pass
     load_buildpkg "$MODULE_DIR/$MODULE/binutils"
