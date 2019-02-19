@@ -26,7 +26,7 @@ RUN mkdir -p /work/project-v/rootfs/tools && mkdir -p /work/project-v/rootfs/sou
 RUN ln -sv "/work/project-v/rootfs/tools" /
 
 # Change the permissions of the working directory to reflect the user and as writable and sticky
-RUN chown root:root -vR /work/* && chmod -v a+wt /work/project-v/rootfs/sources
+RUN chown projv:projv -vR /work/* && chmod -v a+wt /work/project-v/rootfs/sources
 
 # Add passwordless sudo for the projv user.
 RUN echo "projv ALL = NOPASSWD : ALL" >> /etc/sudoers
@@ -36,6 +36,9 @@ RUN cd /work/project-v && make install
 
 # Just run a check to see that everything is okay with our enviroment.
 RUN cd /work/project-v && make check
+
+# Clear cache.
+RUN sync
 
 # Use projv as default user.
 USER projv
