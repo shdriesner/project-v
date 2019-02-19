@@ -38,6 +38,7 @@ RUN cd /work/project-v && make check
 USER projv
 WORKDIR /work/project-v
 COPY [ "conf/.bash_profile", "conf/.bashrc", "/home/projv/" ]
+RUN sudo projv:projv -R /home/projv/*
 RUN source ~/.bash_profile
 
 # Set enviroment variables.
