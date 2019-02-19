@@ -34,8 +34,8 @@ RUN cd /work/project-v && make check
 # Use root as default user.
 USER root
 WORKDIR /work/project-v
-RUN umask 022
-RUN set +h
+COPY [ "conf/.bash_profile", "conf/.bashrc", "/root/" ]
+RUN source ~/.bash_profile
 
 # Set enviroment variables.
 ENV ROOTFS=/work/project-v/rootfs
