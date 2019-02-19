@@ -31,6 +31,9 @@ RUN cd /work/project-v && make install
 # Just run a check to see that everything is okay with our enviroment.
 RUN cd /work/project-v && make check
 
+# Clear cache.
+RUN sync
+
 # Use root as default user.
 USER root
 WORKDIR /work/project-v
