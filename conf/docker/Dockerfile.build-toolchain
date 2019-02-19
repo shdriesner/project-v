@@ -37,8 +37,8 @@ RUN cd /work/project-v && make check
 # Use projv as default user.
 USER projv
 WORKDIR /work/project-v
-RUN umask 022
-RUN set +h
+COPY [ "conf/.bash_profile", "conf/.bashrc", "/home/projv/" ]
+RUN source ~/.bash_profile
 
 # Set enviroment variables.
 ENV ROOTFS=/work/project-v/rootfs
