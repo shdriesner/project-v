@@ -12,7 +12,7 @@ jobs:
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: make docker-pipelines
+  - script: make docker-pipeline
     displayName: 'Build docker images for dev and master'
   - script: docker run --privileged build-toolchain:master
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
