@@ -100,19 +100,11 @@ make docker
 ```
 3. Build the toolchain.
 ```
-docker run build-toolchain ## Master Branch
-```
-or
-```
-docker run build-toolchain dev ## Dev Branch
+docker run build-toolchain:<BRANCH>
 ```
 4. Build the base-os. 
 ```
-docker run --privileged build-base-os ## Master Branch
-```
-or
-```
-docker run --privileged build-base-os -b dev ## Dev Branch
+docker run --privileged build-base-os:<BRANCH>
 ```
 
 _`build-base-os` will take a prebuilt toolchain from Github to build the base-os module._

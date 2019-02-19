@@ -35,36 +35,6 @@ prep-local:
 	echo "PATH=/tools/bin:/bin:/usr/bin:/sbin:/usr/local/bin" >> builder.env
 	echo "export ROOTFS LC_ALL ROOTFS_TGT PATH" >> builder.env
 
-.PHONY: prep-pipeline
-prep-pipeline:
-	@echo "Prepping the pipeline rootfs build enviroment..."
-	@echo "Creating enviroment file..."
-	echo "set +h" > builder.env
-	echo "umask 022" >> builder.env
-	echo "MODULE_DIR=${MODULE_DIR}" >> builder.env
-	echo "ROOTFS=${ROOTFS}" >> builder.env
-	echo "LC_ALL=POSIX" >> builder.env
-	echo 'ROOTFS_TGT=$(uname -m)-project_v-linux-gnu' >> builder.env
-	echo "PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin" >> builder.env
-	echo "export ROOTFS LC_ALL ROOTFS_TGT PATH" >> builder.env
-
-.PHONY: toolchain-pipeline
-toolchain-pipeline:
-	@echo "Setting MAKEFLAGS"
-	export MAKEFLAGS="-j${CPU_JOBS}"
-	@echo "Going to make the toolchain... -- ${MAKEFLAGS}"
-	export ROOTFS=${ROOTFS}
-	export ROOTFS_TGT=${ROOTFS_TGT}
-	export MODULE_DIR=${MODULE_DIR}
-	export PATH=/tools/bin:/bin:/usr/bin:/usr/local/bin
-	ROOTFS=${ROOTFS} ROOTFS_TGT=${ROOTFS_TGT} MODULE_DIR=${MODULE_DIR} mkmod tools
-
-.PHONY: docker
-docker:
-	@echo "Creating docker images..."
-	docker build -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:latest .
-	docker build -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:latest .
-
 .PHONY: install
 install:
 	@echo "Creating project-v dirs..."
@@ -77,6 +47,22 @@ install:
 	chmod +x scripts/addtmpl
 	cp scripts/mkmod /usr/local/bin/mkmod
 	cp scripts/addtmpl /usr/local/bin/addtmpl
+
+.PHONY: docker
+docker:
+	@echo "Creating docker images..."
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev
+
+.PHONY: docker-pipeline
+docker-pipeline:
+	@echo "Creating docker images for pipelines..."
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev
 
 .PHONY: check
 check:
