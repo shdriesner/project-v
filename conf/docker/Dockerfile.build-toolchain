@@ -12,6 +12,8 @@ RUN groupadd projv \
  && useradd -s /bin/bash -g projv -m -k /dev/null projv \
  && echo "projv:linux" | chpasswd
 RUN adduser projv sudo
+COPY [ "conf/.bash_profile", "conf/.bashrc", "/home/projv/" ]
+RUN sudo chown projv:projv -R /home/projv/*
 
 # Make the directory for the repo and pull it down.
 RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote add origin https://github.com/junland/project-v && git pull origin $BRANCH
@@ -37,8 +39,6 @@ RUN cd /work/project-v && make check
 # Use projv as default user.
 USER projv
 WORKDIR /work/project-v
-COPY [ "conf/.bash_profile", "conf/.bashrc", "/home/projv/" ]
-RUN sudo chown projv:projv -R /home/projv/*
 RUN source ~/.bash_profile
 
 # Set enviroment variables.
