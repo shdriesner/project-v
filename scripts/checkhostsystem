@@ -1,54 +1,69 @@
 #!/bin/bash
 # Simple script to list version numbers of critical development tools
 export LC_ALL=C
-bash --version | head -n1 | cut -d" " -f2-4
+
+# report-version takes a list of executables
+# and reports whether they exist, whether their
+# default path is a link to something else,
+# and the first line of its version output
+function report-version() {
+  for x in $*; do
+    local t=$(which ${x} 2>/dev/null)
+    if [ "X" == "X${t}" ]; then
+      echo "${x}: not found"
+    else
+      echo -n "${t}"
+      local l=$(readlink -f ${t})
+      [ "X${t}" == "X${l}" ] || echo -n " -> ${l}";
+      echo ": $(${x} --version | head -n1)"
+    fi
+  done
+}
+
+# begin with bash
+report-version bash
+
+#bash --version | head -n1 | cut -d' ' -f2-4
 MYSH=$(readlink -f /bin/sh)
-echo "/bin/sh -> $MYSH"
-echo $MYSH | grep -q bash || echo "ERROR: /bin/sh does not point to bash"
+echo "/bin/sh -> ${MYSH}"
+[ "Xbash" == "X$(basename ${MYSH})" ] || echo "ERROR: /bin/sh does not point to bash"
 unset MYSH
 
-echo -n "Binutils: "; ld --version | head -n1 | cut -d" " -f3-
-bison --version | head -n1
-
-if [ -h /usr/bin/yacc ]; then
-  echo "/usr/bin/yacc -> `readlink -f /usr/bin/yacc`";
-elif [ -x /usr/bin/yacc ]; then
-  echo yacc is `/usr/bin/yacc --version | head -n1`
-else
-  echo "yacc not found" 
-fi
-
-bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d" " -f1,6-
-echo -n "Coreutils: "; chown --version | head -n1 | cut -d")" -f2
-diff --version | head -n1
-find --version | head -n1
-gawk --version | head -n1
-
-if [ -h /usr/bin/awk ]; then
-  echo "/usr/bin/awk -> `readlink -f /usr/bin/awk`";
-elif [ -x /usr/bin/awk ]; then
-  echo awk is `/usr/bin/awk --version | head -n1`
-else 
-  echo "awk not found" 
-fi
-
-gcc --version | head -n1
-g++ --version | head -n1
-ldd --version | head -n1 | cut -d" " -f2-  # glibc version
-grep --version | head -n1
-gzip --version | head -n1
+# Linux version info (could also use uname -a)
 cat /proc/version
-m4 --version | head -n1
-make --version | head -n1
-patch --version | head -n1
-echo Perl `perl -V:version`
-sed --version | head -n1
-tar --version | head -n1
-makeinfo --version | head -n1
-xz --version | head -n1
 
-echo 'int main(){}' > dummy.c && g++ -o dummy dummy.c
-if [ -x dummy ]
-  then echo "g++ compilation OK";
-  else echo "g++ compilation failed"; fi
-rm -f dummy.c dummy
+# now coreutils
+echo "Coreutils: $(chown --version | head -n1 | cut -d' ' -f2-)"
+
+# now binutils
+echo -n "Binutils: "
+MYBU="$(ld --version 2>/dev/null | head -n1 | cut -d' ' -f3-)"
+[ "X" == "X${MYBU}" ] && echo 'not found' || echo ${MYBU}
+unset MYBU
+
+# awk requires special handling
+echo "$(which awk 2>/dev/null): $(awk -W version 2>/dev/null | head -n1)"
+
+# perl requires special handling
+echo "$(which perl 2>/dev/null): $(perl -V:version | cut -d\' -f2)"
+
+# these all report their versions in a common way
+report-version ldd diff find grep sed tar gzip xz gawk bison yacc m4 make patch makeinfo git
+
+# bzip2 requires special handling
+MYBZ2="$(which bzip2 2>/dev/null)"
+[ "X" == "X${MYBZ2}" ] && \
+    echo "bzip2: not found" || \
+        echo "${MYBZ2}: $(bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d' ' -f7-)"
+unset MYBZ2
+
+# compiler tools
+report-version gcc g++
+
+# pass a valid C++ program to stdin and check whether it builds correctly
+echo -n ""
+[ "X" == "X$(which g++ 2>/dev/null)" ] && \
+    echo "ERROR: g++ compilation unavailable" || \
+        { echo 'int main(){return 0;}' | g++ -x c++ -o /dev/null - && \
+              echo 'g++ compilation OK' || \
+                  echo 'ERROR: g++ compilation failed'; }
