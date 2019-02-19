@@ -1,13 +1,55 @@
-FROM ubuntu:latest
+FROM debian:stable
 
+# We can set the git branch and what toolchain URL to bring down by using --build-arg when we use docker build.
+ARG BRANCH=master
+ARG TOOLS="https://github.com/junland/project-v/releases/download/0.0.1-alpha/x86_64-project_v-linux-gnu.tar.gz"
+
+# Install essential packages.
 RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma wget coreutils -y && apt-get autoremove -y
 
-COPY conf/docker/build-base-os-entry.sh /usr/local/bin/entry.sh
+# Set bash as default shell
+RUN cd /bin/ && rm sh && ln -s bash sh
 
-RUN chmod 777 /usr/local/bin/entry.sh
+# Make the directory for the repo and pull the targeted branch
+RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote add origin https://github.com/junland/project-v && git pull origin $BRANCH
 
-RUN cd /bin/ && sudo rm sh && sudo ln -s bash sh
+# Create output dirs.
+RUN mkdir -p /work/project-v/rootfs/tools && mkdir -p /work/project-v/rootfs/sources
 
-WORKDIR /work
+# Create link to tools.
+RUN ln -sv "/work/project-v/rootfs/tools" /
 
-ENTRYPOINT ["/usr/local/bin/entry.sh"]
+# Download toolchain and unpack it.
+RUN wget -c $TOOLS -O toolchain.compressed && tar -xavf ./toolchain.compressed -C /work/project-v/rootfs/tools
+
+# Change the permissions of the working directory to reflect the user and as writable and sticky
+RUN chown root:root -vR /work/* && chmod -v a+wt /work/project-v/rootfs/sources
+
+# Install libs and commands
+RUN cd /work/project-v && make install
+
+# Just run a check to see that everything is okay with our enviroment.
+RUN cd /work/project-v && make check
+
+# Clear cache.
+RUN sync
+
+# Use root as default user.
+USER root
+WORKDIR /work/project-v
+COPY [ "conf/.bash_profile", "conf/.bashrc", "/root/" ]
+RUN source ~/.bash_profile
+
+# Set enviroment variables.
+ENV ROOTFS=/work/project-v/rootfs
+ENV ROOTFS_TGT=x86_64-project_v-linux-gnu
+ENV MODULE_DIR=/work/project-v/modules
+ENV PATH=/tools/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/
+ENV LC_ALL=POSIX
+
+# Adjustable makeflags argument.
+ARG CPU_JOBS=1
+ENV MAKEFLAGS="-j$CPU_JOBS"
+
+# Here we go.
+ENTRYPOINT ["mkmod", "base-os"]
