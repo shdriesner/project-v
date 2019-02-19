@@ -52,18 +52,21 @@ report-version ldd diff find grep sed tar gzip xz gawk bison yacc m4 make patch 
 
 # bzip2 requires special handling
 MYBZ2="$(which bzip2 2>/dev/null)"
-[ "X" == "X${MYBZ2}" ] && \
-    echo "bzip2: not found" || \
-        echo "${MYBZ2}: $(bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d' ' -f7-)"
+if [ "X" == "X${MYBZ2}" ]; then
+    echo "bzip2: not found"
+else
+    echo "${MYBZ2}: $(bzip2 --version 2>&1 < /dev/null | head -n1 | cut -d' ' -f7-)"
+fi
 unset MYBZ2
 
 # compiler tools
 report-version gcc g++
 
 # pass a valid C++ program to stdin and check whether it builds correctly
-echo -n ""
-[ "X" == "X$(which g++ 2>/dev/null)" ] && \
-    echo "ERROR: g++ compilation unavailable" || \
-        { echo 'int main(){return 0;}' | g++ -x c++ -o /dev/null - && \
-              echo 'g++ compilation OK' || \
-                  echo 'ERROR: g++ compilation failed'; }
+if [ "X" == "X$(which g++ 2>/dev/null)" ]; then
+  echo "ERROR: g++ compilation unavailable"
+else
+  echo 'int main(){return 0;}' | g++ -x c++ -o /dev/null - && \
+    echo 'g++ compilation OK' || \
+      echo 'ERROR: g++ compilation failed'
+fi
