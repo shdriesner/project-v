@@ -51,18 +51,18 @@ install:
 .PHONY: docker
 docker:
 	@echo "Creating docker images..."
-	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master
-	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev
-	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master
-	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master .
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev .
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master .
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev .
 
 .PHONY: docker-pipeline
 docker-pipeline:
 	@echo "Creating docker images for pipelines..."
-	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master
-	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev
-	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master
-	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:master .
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-toolchain -t build-toolchain:dev .
+	docker build --build-arg BRANCH=master -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:master .
+	docker build --build-arg BRANCH=dev -f ./conf/docker/Dockerfile.build-base-os -t build-base-os:dev .
 
 .PHONY: check
 check:
