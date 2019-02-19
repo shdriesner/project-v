@@ -1,13 +1,59 @@
-FROM ubuntu:latest
+FROM debian:stable
+
+# We can set the git branch to get by using --build-arg when we use docker build.
+ARG BRANCH=master
 
 RUN apt-get update && apt-get install autoconf-archive curl bison g++ xz-utils libtool automake pkg-config perl libtool m4 autoconf gawk build-essential texinfo tree git sudo p7zip lzma-dev lzma wget coreutils -y && apt-get autoremove -y
 
-COPY conf/docker/build-toolchain-entry.sh /usr/local/bin/entry.sh
+RUN cd /bin/ && rm sh && ln -s bash sh
 
-RUN chmod 777 /usr/local/bin/entry.sh
+# Add normal user as 'projv'
+RUN groupadd projv \
+ && useradd -s /bin/bash -g projv -m -k /dev/null projv \
+ && echo "projv:linux" | chpasswd
+RUN adduser projv sudo
+COPY [ "conf/.bash_profile", "conf/.bashrc", "/home/projv/" ]
+RUN chown projv:projv /home/projv/.bash_profile
+RUN chown projv:projv /home/projv/.bashrc
 
-RUN cd /bin/ && sudo rm sh && sudo ln -s bash sh
+# Make the directory for the repo and pull it down.
+RUN mkdir -p /work/project-v && cd /work/project-v && git init . && git remote add origin https://github.com/junland/project-v && git pull origin $BRANCH
 
-WORKDIR /work
+# Create output dirs.
+RUN mkdir -p /work/project-v/rootfs/tools && mkdir -p /work/project-v/rootfs/sources
 
-ENTRYPOINT ["/usr/local/bin/entry.sh"]
+# Create link to tools.
+RUN ln -sv "/work/project-v/rootfs/tools" /
+
+# Change the permissions of the working directory to reflect the user and as writable and sticky
+RUN chown projv:projv -vR /work/* && chmod -v a+wt /work/project-v/rootfs/sources
+
+# Add passwordless sudo for the projv user.
+RUN echo "projv ALL = NOPASSWD : ALL" >> /etc/sudoers
+
+# Install libs and commands
+RUN cd /work/project-v && make install
+
+# Just run a check to see that everything is okay with our enviroment.
+RUN cd /work/project-v && make check
+
+# Clear cache.
+RUN sync
+
+# Use projv as default user.
+USER projv
+WORKDIR /work/project-v
+RUN source ~/.bash_profile
+
+# Set enviroment variables.
+ENV ROOTFS=/work/project-v/rootfs
+ENV ROOTFS_TGT=x86_64-project_v-linux-gnu
+ENV MODULE_DIR=/work/project-v/modules
+ENV PATH=/tools/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/
+ENV LC_ALL=POSIX
+
+# Adjustable makeflags argument.
+ARG CPU_JOBS=1
+ENV MAKEFLAGS="-j$CPU_JOBS"
+
+ENTRYPOINT ["mkmod", "tools"]

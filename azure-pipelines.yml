@@ -7,16 +7,22 @@ trigger:
 
 jobs:
 - job: 'Build'
-  timeoutInMinutes: 125
-  cancelTimeoutInMinutes: 140
+  timeoutInMinutes: 300
+  cancelTimeoutInMinutes: 300
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
-  - script: make docker
-    displayName: 'Build docker images'
-  - script: docker run --privileged build-toolchain -b dev
+  - script: make docker-pipelines
+    displayName: 'Build docker images for dev and master'
+  - script: docker run --privileged build-toolchain:master
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Build toolchain on master'
+  - script: docker run --privileged build-toolchain:dev
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-    displayName: 'Build toolchain'
-  - script: docker run --privileged build-base-os -b dev
+    displayName: 'Build toolchain on dev'
+  - script: docker run --privileged build-base-os:master
+    condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    displayName: 'Build base-os on master'
+  - script: docker run --privileged build-base-os:dev
     condition: and(always(), eq(variables['Build.SourceBranch'], 'refs/heads/dev'))
-    displayName: 'Build base-os'
+    displayName: 'Build base-os on dev'
