@@ -7,8 +7,8 @@ trigger:
 
 jobs:
 - job: 'Build'
-  timeoutInMinutes: 125
-  cancelTimeoutInMinutes: 140
+  timeoutInMinutes: 300
+  cancelTimeoutInMinutes: 300
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
