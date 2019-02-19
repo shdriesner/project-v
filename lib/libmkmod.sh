@@ -291,7 +291,7 @@ do_build_chroot_with_tools() {
     TERM="$TERM"                \
     PS1='(project-v chroot) \u:\w\$ ' \
     PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
-	/tools/bin/bash -c "cd /sources/$PKG_DIR && . ./BUILDPKG && build"
+	/tools/bin/bash +h -c "cd /sources/$PKG_DIR && . ./BUILDPKG && build"
 }
 
 # do_cmd_chroot_with_tools is a generic function to run a command inside a chroot.
@@ -308,5 +308,5 @@ do_cmd_chroot_with_tools() {
     TERM="$TERM"                \
     PS1='(project-v chroot) \u:\w\$ ' \
     PATH=/bin:/usr/bin:/sbin:/usr/sbin:/tools/bin \
-	/tools/bin/bash -c "$CMD"
+	/tools/bin/bash +h -c "$CMD"
 }
