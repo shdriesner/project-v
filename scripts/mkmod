@@ -59,6 +59,15 @@ if [ "$1" = "" ] ; then
       exit 1
 fi
 
+UMASK=$(umask)
+
+if [ "$UMASK" != "022" ]; then
+  print_err "umask needs to be set as 022 instead of $UMASK"
+  exit 1
+else
+  print_ok "umask set as $UMASK"
+fi
+
 ## Remove any trailing slash at the end.
 MODULE_DIR=${MODULE_DIR%/}
 ROOTFS=${ROOTFS%/}
