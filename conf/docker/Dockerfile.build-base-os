@@ -23,7 +23,7 @@ RUN ln -sv "/work/project-v/rootfs/tools" /
 RUN wget -c $TOOLS -O toolchain.compressed && tar -xavf ./toolchain.compressed -C /work/project-v/rootfs/tools
 
 # Change the permissions of the working directory to reflect the user and as writable and sticky
-RUN chown root:root -R /work/* && chmod -v a+wt /work/project-v/rootfs/sources
+RUN chown root:root -vR /work/* && chmod -v a+wt /work/project-v/rootfs/sources
 
 # Install libs and commands
 RUN cd /work/project-v && make install
