@@ -62,7 +62,7 @@ fi
 
 UMASK=$(umask)
 
-if [ "$UMASK" != "022" ]; then
+if (( "$UMASK" != "022" )) || (( "$UMASK" != "0022" )); then
   print_err "umask needs to be set as 022 instead of $UMASK"
   exit 1
 else
